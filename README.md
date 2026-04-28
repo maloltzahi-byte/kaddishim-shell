@@ -69,7 +69,12 @@ Sprint 7: Structural Refactor — Passed
 Scope: App.tsx cleanup, layout extraction, Dashboard extraction, Calls extraction.
 Status: approved by Architect QA.
 
-Sprint 8: Call Details Screen — QA Pending
+Sprint 8: Call Details Screen — Passed
 Route: /calls/:callId
 Test Route: /calls/M-2025-0548
+Status: approved by Architect QA.
+
+Sprint 9: Kaddish Request Details Screen — QA Pending
+Route: /kaddish-requests/:requestId
+Test Route: /kaddish-requests/K-2025-0321
 Status: live in StackBlitz, pending Architect QA.

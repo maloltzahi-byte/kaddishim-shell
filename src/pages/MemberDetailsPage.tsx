@@ -1,30 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
+import { dataAdapter } from '../lib/dataAdapter'
 
-type MemberActivityRow = Record<string, React.ReactNode> & {
-  date: string
-  activityType: string
-  description: string
-  status: string
-}
-
-const memberStats = [
-  { label: 'סטטוס', value: 'פעיל' },
-  { label: 'סוג חברות', value: 'קבוע' },
-  { label: 'פעילות החודש', value: '8' },
-  { label: 'בקשות קשורות', value: '3' }
-]
-
-const memberDetails = [
-  { label: 'שם מלא', value: 'שלמה אברמוב' },
-  { label: 'מס׳ חבר', value: 'C-2025-1284' },
-  { label: 'עיר', value: 'ירושלים' },
-  { label: 'טלפון', value: '050-1112233' },
-  { label: 'אימייל', value: 'shlomo@example.com' },
-  { label: 'סטטוס', value: 'פעיל' }
-]
+type MemberActivityRow = Record<string, React.ReactNode> & { date: string; activityType: string; description: string; status: string }
 
 const membershipDetails = [
   { label: 'סוג חברות', value: 'קבוע' },
@@ -70,8 +50,8 @@ const activityColumns: Column<MemberActivityRow>[] = [
   { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
 ]
 
-function MemberStats() {
-  return <div className="calls-stats">{memberStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+function MemberStats({ rows }: { rows: Array<{ label: string; value: string }> }) {
+  return <div className="calls-stats">{rows.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function DetailsPanel({ title, rows }: { title: string; rows: Array<{ label: string; value: string }> }) {
@@ -87,5 +67,10 @@ function TreatmentTimeline() {
 }
 
 export function MemberDetailsPage() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>חבר C-2025-1284</h1><p>ניהול פרטי החבר, פעילות קהילתית, קשרים ובקשות</p></div><section className="calls-panel"><HeaderActions /><MemberStats /><div className="reports-grid"><DetailsPanel title="פרטי חבר" rows={memberDetails} /><DetailsPanel title="פרטי חברות" rows={membershipDetails} /><DetailsPanel title="קשרים במערכת" rows={systemRelations} /></div><section className="reports-table-section"><h2>פעילות אחרונה</h2><DataTable columns={activityColumns} rows={recentActivity} /></section><TreatmentTimeline /></section></div>
+  const { memberId } = useParams()
+  const member = dataAdapter.members.findById(memberId || '') || dataAdapter.members.findById('C-2025-1284')
+  if (!member) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
+  const memberStats = [{ label: 'סטטוס', value: member.status }, { label: 'סוג חברות', value: member.membershipType }, { label: 'פעילות החודש', value: '8' }, { label: 'בקשות קשורות', value: '3' }]
+  const memberDetails = [{ label: 'שם מלא', value: member.fullName }, { label: 'מס׳ חבר', value: member.memberId }, { label: 'עיר', value: member.city }, { label: 'טלפון', value: member.phone }, { label: 'אימייל', value: member.email }, { label: 'סטטוס', value: member.status }]
+  return <div className="content calls-content"><div className="title calls-title"><h1>חבר {member.memberId}</h1><p>ניהול פרטי החבר, פעילות קהילתית, קשרים ובקשות</p></div><section className="calls-panel"><HeaderActions /><MemberStats rows={memberStats} /><div className="reports-grid"><DetailsPanel title="פרטי חבר" rows={memberDetails} /><DetailsPanel title="פרטי חברות" rows={membershipDetails} /><DetailsPanel title="קשרים במערכת" rows={systemRelations} /></div><section className="reports-table-section"><h2>פעילות אחרונה</h2><DataTable columns={activityColumns} rows={recentActivity} /></section><TreatmentTimeline /></section></div>
 }

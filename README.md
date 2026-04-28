@@ -1,6 +1,6 @@
 # Kaddishim Shell
 
-React + Vite + TypeScript visual shell for the Kaddishim dashboard.
+React + Vite + TypeScript visual shell for the Kaddishim management system.
 
 ## Canonical source
 
@@ -24,6 +24,10 @@ https://stackblitz.com/github/maloltzahi-byte/kaddishim-shell
 
 ## Sprint status
 
-Dashboard Static Lock V0.4 Sprint Closure.
+Dashboard: Visual Locked — V1.0.0
+Approval Date: 28/04/2026
+Approved By: Architect QA Overlay
+Cosmetic Punch List: 4 items deferred to Final Polish sprint
 
-The next sprint must not start before a real runtime screenshot is created from the live React app.
+Sprint 1: Calls List Screen — in progress
+Scope: /calls route, generic table primitives, filter bar, hardcoded calls list data.

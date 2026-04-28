@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { dataAdapter } from '../lib/dataAdapter'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
+import type { MemberRecord } from '../types/entities'
 
 type MemberActivityRow = Record<string, React.ReactNode> & { date: string; activityType: string; description: string; status: string }
 
@@ -68,7 +71,29 @@ function TreatmentTimeline() {
 
 export function MemberDetailsPage() {
   const { memberId } = useParams()
-  const member = dataAdapter.members.findById(memberId || '') || dataAdapter.members.findById('C-2025-1284')
+  const fallbackMember = dataAdapter.members.findById(memberId || '') || dataAdapter.members.findById('C-2025-1284')
+  const [member, setMember] = useState<MemberRecord | undefined>(fallbackMember)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadMember() {
+      if (!memberId) return
+      try {
+        const row = await supabaseReadAdapter.members.findById(memberId)
+        if (isMounted && row) setMember(row)
+      } catch {
+        if (isMounted) setMember(fallbackMember)
+      }
+    }
+
+    void loadMember()
+
+    return () => {
+      isMounted = false
+    }
+  }, [memberId, fallbackMember])
+
   if (!member) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
   const memberStats = [{ label: 'סטטוס', value: member.status }, { label: 'סוג חברות', value: member.membershipType }, { label: 'פעילות החודש', value: '8' }, { label: 'בקשות קשורות', value: '3' }]
   const memberDetails = [{ label: 'שם מלא', value: member.fullName }, { label: 'מס׳ חבר', value: member.memberId }, { label: 'עיר', value: member.city }, { label: 'טלפון', value: member.phone }, { label: 'אימייל', value: member.email }, { label: 'סטטוס', value: member.status }]

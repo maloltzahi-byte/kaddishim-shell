@@ -89,6 +89,11 @@ Route: /members/:memberId
 Test Route: /members/C-2025-1284
 Status: approved by Architect QA.
 
-Sprint 12: List-to-Details Navigation — QA Pending
+Sprint 12: List-to-Details Navigation — Passed
 Scope: connect primary list view buttons to details routes.
+Status: confirmed by owner; pending final Architect record only.
+
+Sprint 13: New Call Screen — QA Pending
+Route: /calls/new
+Scope: static visual shell for creating a new minyan call.
 Status: live in StackBlitz, pending Architect QA.

@@ -29,7 +29,12 @@ Approval Date: 28/04/2026
 Approved By: Architect QA Overlay
 Cosmetic Punch List: 4 items deferred to Final Polish sprint
 
-Sprint 1: Calls List Screen — QA Patch Applied
+Sprint 1: Calls List Screen — Passed
 Route: /calls
-Status: live in StackBlitz, pending Architect Overlay QA.
-Patch contents: dashboard nav item, calls KPI row, actions column, activity summary block, denser table/filter styling.
+Approval Date: 28/04/2026
+Approved By: Architect QA
+Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
+
+Sprint 2: Kaddish Requests Screen — implemented, pending live screenshot QA
+Route: /kaddish-requests
+Scope: reused DataTable generic component, shared filter structure, KPI row, hardcoded kaddish request data, action column and bottom activity summary.

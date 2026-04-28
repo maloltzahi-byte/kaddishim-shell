@@ -47,6 +47,12 @@ Approval Date: 28/04/2026
 Approved By: Architect QA
 Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
-Sprint 4: Members Screen — QA Pending
+Sprint 4: Members Screen — Passed
 Route: /members
+Approval Date: 28/04/2026
+Approved By: Architect QA
+Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
+
+Sprint 5: Reports Screen — QA Pending
+Route: /reports
 Status: live in StackBlitz, pending Architect QA.

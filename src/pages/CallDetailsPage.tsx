@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
+import { dataAdapter } from '../lib/dataAdapter'
 
 type AssignedVolunteerRow = Record<string, React.ReactNode> & {
   volunteerName: string
@@ -10,22 +11,6 @@ type AssignedVolunteerRow = Record<string, React.ReactNode> & {
   confirmationStatus: string
   confirmationTime: string
 }
-
-const callStats = [
-  { label: 'נדרשים', value: '10' },
-  { label: 'אישרו', value: '8' },
-  { label: 'חסרים', value: '2' },
-  { label: 'דחיפות', value: 'גבוהה' }
-]
-
-const callDetails = [
-  { label: 'מס׳ קריאה', value: 'M-2025-0548' },
-  { label: 'עיר', value: 'בני ברק' },
-  { label: 'שעה', value: '07:00' },
-  { label: 'סטטוס', value: 'פתוחה' },
-  { label: 'דחיפות', value: 'גבוהה' },
-  { label: 'עדכון אחרון', value: 'לפני 5 דק׳' }
-]
 
 const locationDetails = [
   { label: 'בית עלמין', value: 'בית החיים בני ברק' },
@@ -74,8 +59,8 @@ const volunteerColumns: Column<AssignedVolunteerRow>[] = [
   { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
 ]
 
-function CallStats() {
-  return <div className="calls-stats">{callStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+function CallStats({ rows }: { rows: Array<{ label: string; value: string }> }) {
+  return <div className="calls-stats">{rows.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function DetailsPanel({ title, rows }: { title: string; rows: Array<{ label: string; value: string }> }) {
@@ -91,5 +76,10 @@ function TreatmentTimeline() {
 }
 
 export function CallDetailsPage() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>קריאת מניין M-2025-0548</h1><p>ניהול פרטי הקריאה, שיבוץ מתנדבים ומעקב אחר ביצוע</p></div><section className="calls-panel"><HeaderActions /><CallStats /><div className="reports-grid"><DetailsPanel title="פרטי הקריאה" rows={callDetails} /><DetailsPanel title="פרטי מיקום" rows={locationDetails} /><DetailsPanel title="מצב שיבוץ" rows={assignmentDetails} /></div><section className="reports-table-section"><h2>מתנדבים משובצים</h2><DataTable columns={volunteerColumns} rows={assignedVolunteers} /></section><TreatmentTimeline /></section></div>
+  const { callId } = useParams()
+  const call = dataAdapter.calls.findById(callId || '') || dataAdapter.calls.findById('M-2025-0548')
+  if (!call) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
+  const callStats = [{ label: 'נדרשים', value: call.required }, { label: 'אישרו', value: call.confirmed }, { label: 'חסרים', value: call.missing }, { label: 'דחיפות', value: call.urgency }]
+  const callDetails = [{ label: 'מס׳ קריאה', value: call.callId }, { label: 'עיר', value: call.city }, { label: 'שעה', value: call.time }, { label: 'סטטוס', value: call.status }, { label: 'דחיפות', value: call.urgency }, { label: 'עדכון אחרון', value: call.updated }]
+  return <div className="content calls-content"><div className="title calls-title"><h1>קריאת מניין {call.callId}</h1><p>ניהול פרטי הקריאה, שיבוץ מתנדבים ומעקב אחר ביצוע</p></div><section className="calls-panel"><HeaderActions /><CallStats rows={callStats} /><div className="reports-grid"><DetailsPanel title="פרטי הקריאה" rows={callDetails} /><DetailsPanel title="פרטי מיקום" rows={locationDetails} /><DetailsPanel title="מצב שיבוץ" rows={assignmentDetails} /></div><section className="reports-table-section"><h2>מתנדבים משובצים</h2><DataTable columns={volunteerColumns} rows={assignedVolunteers} /></section><TreatmentTimeline /></section></div>
 }

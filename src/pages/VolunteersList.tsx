@@ -4,6 +4,7 @@ import { SelectField } from '../components/primitives/SelectField'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
+import { volunteersData, volunteersStats } from '../data/volunteers'
 
 type VolunteerRow = Record<string, React.ReactNode> & {
   volunteerId: string
@@ -15,21 +16,6 @@ type VolunteerRow = Record<string, React.ReactNode> & {
   status: string
   updated: string
 }
-
-const volunteerStats = [
-  { label: 'מתנדבים פעילים', value: '142' },
-  { label: 'זמינים היום', value: '87' },
-  { label: 'שובצו השבוע', value: '34' },
-  { label: 'דורשים טיפול', value: '9' }
-]
-
-const volunteersData: VolunteerRow[] = [
-  { volunteerId: 'V-2025-0142', fullName: 'אברהם כהן', city: 'ירושלים', phone: '050-1234567', availability: 'היום', weeklyAssignments: '4', status: 'פעיל', updated: 'לפני 4 דק׳' },
-  { volunteerId: 'V-2025-0141', fullName: 'משה לוי', city: 'בני ברק', phone: '052-2345678', availability: 'השבוע', weeklyAssignments: '2', status: 'פעיל', updated: 'לפני 18 דק׳' },
-  { volunteerId: 'V-2025-0140', fullName: 'יוסף מזרחי', city: 'פתח תקוה', phone: '053-3456789', availability: 'לא זמין', weeklyAssignments: '0', status: 'דורש טיפול', updated: 'לפני 35 דק׳' },
-  { volunteerId: 'V-2025-0139', fullName: 'דוד פרידמן', city: 'אלעד', phone: '054-4567890', availability: 'היום', weeklyAssignments: '5', status: 'פעיל', updated: 'לפני שעה' },
-  { volunteerId: 'V-2025-0138', fullName: 'חיים ביטון', city: 'בית שמש', phone: '055-5678901', availability: 'מחר', weeklyAssignments: '1', status: 'ממתין לאישור', updated: 'לפני שעתיים' }
-]
 
 function statusTone(status: string): BadgeTone {
   if (status === 'פעיל') return 'success'
@@ -59,7 +45,7 @@ const columns: Column<VolunteerRow>[] = [
 ]
 
 function VolunteersStats() {
-  return <div className="calls-stats">{volunteerStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+  return <div className="calls-stats">{volunteersStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function VolunteersFilterBar() {
@@ -71,5 +57,5 @@ function VolunteersActivitySummary() {
 }
 
 export function VolunteersList() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדבים</h1><p>רשימת המתנדבים הפעילים והמעקב אחר זמינות ושיבוצים</p></div><section className="calls-panel"><VolunteersStats /><VolunteersFilterBar /><DataTable columns={columns} rows={volunteersData} /><Pagination total={142} /><VolunteersActivitySummary /></section></div>
+  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדבים</h1><p>רשימת המתנדבים הפעילים והמעקב אחר זמינות ושיבוצים</p></div><section className="calls-panel"><VolunteersStats /><VolunteersFilterBar /><DataTable columns={columns} rows={volunteersData as VolunteerRow[]} /><Pagination total={142} /><VolunteersActivitySummary /></section></div>
 }

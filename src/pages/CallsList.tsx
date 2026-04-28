@@ -48,7 +48,7 @@ const callsStats = [
 ]
 
 function FilterBar() {
-  return <div className="filter-bar"><Button>יצירת קריאת מניין</Button><SelectField value="שעה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput /></div>
+  return <div className="filter-bar"><Link className="btn btn-primary" to="/calls/new">יצירת קריאת מניין</Link><SelectField value="שעה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput /></div>
 }
 
 function CallsStats() {

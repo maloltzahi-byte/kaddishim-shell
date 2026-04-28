@@ -9,54 +9,14 @@ import { KaddishRequestDetailsPage } from './pages/KaddishRequestDetailsPage'
 import { NewKaddishRequestPage } from './pages/NewKaddishRequestPage'
 import { VolunteersList } from './pages/VolunteersList'
 import { VolunteerDetailsPage } from './pages/VolunteerDetailsPage'
+import { NewVolunteerPage } from './pages/NewVolunteerPage'
 import { MembersList } from './pages/MembersList'
 import { MemberDetailsPage } from './pages/MemberDetailsPage'
+import { NewMemberPage } from './pages/NewMemberPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 
-function KaddishRequestsPage() {
-  return <PageShell><KaddishRequestsList /></PageShell>
-}
-
-function KaddishRequestDetailsPageRoute() {
-  return <PageShell><KaddishRequestDetailsPage /></PageShell>
-}
-
-function NewKaddishRequestPageRoute() {
-  return <PageShell><NewKaddishRequestPage /></PageShell>
-}
-
-function VolunteersPage() {
-  return <PageShell><VolunteersList /></PageShell>
-}
-
-function VolunteerDetailsPageRoute() {
-  return <PageShell><VolunteerDetailsPage /></PageShell>
-}
-
-function MembersPage() {
-  return <PageShell><MembersList /></PageShell>
-}
-
-function MemberDetailsPageRoute() {
-  return <PageShell><MemberDetailsPage /></PageShell>
-}
-
-function ReportsPageRoute() {
-  return <PageShell><ReportsPage /></PageShell>
-}
-
-function SettingsPageRoute() {
-  return <PageShell><SettingsPage /></PageShell>
-}
-
-function CallDetailsPageRoute() {
-  return <PageShell><CallDetailsPage /></PageShell>
-}
-
-function NewCallPageRoute() {
-  return <PageShell><NewCallPage /></PageShell>
-}
+const shell = (page: React.ReactNode) => <PageShell>{page}</PageShell>
 
 export default function App() {
   return (
@@ -64,17 +24,19 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/calls" element={<CallsList />} />
-        <Route path="/calls/new" element={<NewCallPageRoute />} />
-        <Route path="/calls/:callId" element={<CallDetailsPageRoute />} />
-        <Route path="/kaddish-requests" element={<KaddishRequestsPage />} />
-        <Route path="/kaddish-requests/new" element={<NewKaddishRequestPageRoute />} />
-        <Route path="/kaddish-requests/:requestId" element={<KaddishRequestDetailsPageRoute />} />
-        <Route path="/volunteers" element={<VolunteersPage />} />
-        <Route path="/volunteers/:volunteerId" element={<VolunteerDetailsPageRoute />} />
-        <Route path="/members" element={<MembersPage />} />
-        <Route path="/members/:memberId" element={<MemberDetailsPageRoute />} />
-        <Route path="/reports" element={<ReportsPageRoute />} />
-        <Route path="/settings" element={<SettingsPageRoute />} />
+        <Route path="/calls/new" element={shell(<NewCallPage />)} />
+        <Route path="/calls/:callId" element={shell(<CallDetailsPage />)} />
+        <Route path="/kaddish-requests" element={shell(<KaddishRequestsList />)} />
+        <Route path="/kaddish-requests/new" element={shell(<NewKaddishRequestPage />)} />
+        <Route path="/kaddish-requests/:requestId" element={shell(<KaddishRequestDetailsPage />)} />
+        <Route path="/volunteers" element={shell(<VolunteersList />)} />
+        <Route path="/volunteers/new" element={shell(<NewVolunteerPage />)} />
+        <Route path="/volunteers/:volunteerId" element={shell(<VolunteerDetailsPage />)} />
+        <Route path="/members" element={shell(<MembersList />)} />
+        <Route path="/members/new" element={shell(<NewMemberPage />)} />
+        <Route path="/members/:memberId" element={shell(<MemberDetailsPage />)} />
+        <Route path="/reports" element={shell(<ReportsPage />)} />
+        <Route path="/settings" element={shell(<SettingsPage />)} />
       </Routes>
     </BrowserRouter>
   )

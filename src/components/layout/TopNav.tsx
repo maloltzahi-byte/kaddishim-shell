@@ -11,7 +11,12 @@ const navItems = [
   { label: 'הגדרות', to: '/settings' }
 ]
 
+function isActive(pathname: string, to: string) {
+  if (to === '/') return pathname === '/'
+  return pathname === to || pathname.startsWith(`${to}/`)
+}
+
 export function TopNav() {
   const location = useLocation()
-  return <header className="top"><LogoBlock /><nav className="nav">{navItems.map(item => <Link className={location.pathname === item.to ? 'active' : ''} key={item.label} to={item.to}>{item.label}</Link>)}<span className="q">?</span></nav></header>
+  return <header className="top"><LogoBlock /><nav className="nav">{navItems.map(item => <Link className={isActive(location.pathname, item.to) ? 'active' : ''} key={item.label} to={item.to}>{item.label}</Link>)}<span className="q">?</span></nav></header>
 }

@@ -138,11 +138,11 @@ Files:
 - src/lib/dataAdapter.ts
 Status: build passed and Architect QA confirmed.
 
-Sprint 22: Data Adapter Completion / Detail Screens Extraction — QA Pending
+Sprint 22: Data Adapter Completion / Detail Screens Extraction — Passed
 Scope: completed data layer wiring for VolunteersList, detail screens, reports and public pages using static data files and internal dataAdapter. No backend connection.
 Includes:
 - VolunteersList wired to src/data/volunteers.ts
 - Detail screens wired to dataAdapter
 - Reports/public adapter support
 - Undefined/fallback safeguards
-Status: live in StackBlitz, pending Architect QA.
+Status: build passed and Architect QA confirmed.

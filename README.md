@@ -84,7 +84,11 @@ Route: /volunteers/:volunteerId
 Test Route: /volunteers/V-2025-0142
 Status: approved by Architect QA.
 
-Sprint 11: Member Details Screen — QA Pending
+Sprint 11: Member Details Screen — Passed
 Route: /members/:memberId
 Test Route: /members/C-2025-1284
+Status: approved by Architect QA.
+
+Sprint 12: List-to-Details Navigation — QA Pending
+Scope: connect primary list view buttons to details routes.
 Status: live in StackBlitz, pending Architect QA.

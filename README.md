@@ -74,7 +74,12 @@ Route: /calls/:callId
 Test Route: /calls/M-2025-0548
 Status: approved by Architect QA.
 
-Sprint 9: Kaddish Request Details Screen — QA Pending
+Sprint 9: Kaddish Request Details Screen — Passed
 Route: /kaddish-requests/:requestId
 Test Route: /kaddish-requests/K-2025-0321
+Status: approved by Architect QA.
+
+Sprint 10: Volunteer Details Screen — QA Pending
+Route: /volunteers/:volunteerId
+Test Route: /volunteers/V-2025-0142
 Status: live in StackBlitz, pending Architect QA.

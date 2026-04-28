@@ -10,6 +10,7 @@ import { KaddishRequestsList } from './pages/KaddishRequestsList'
 import { VolunteersList } from './pages/VolunteersList'
 import { MembersList } from './pages/MembersList'
 import { ReportsPage } from './pages/ReportsPage'
+import { SettingsPage } from './pages/SettingsPage'
 
 const navItems = [
   { label: 'דשבורד ראשי', to: '/' },
@@ -18,7 +19,7 @@ const navItems = [
   { label: 'מתנדבים', to: '/volunteers' },
   { label: 'חברים', to: '/members' },
   { label: 'דוחות', to: '/reports' },
-  { label: 'הגדרות', to: '/' }
+  { label: 'הגדרות', to: '/settings' }
 ]
 
 function LogoBlock() {
@@ -156,6 +157,10 @@ function ReportsPageRoute() {
   return <PageShell><ReportsPage /></PageShell>
 }
 
+function SettingsPageRoute() {
+  return <PageShell><SettingsPage /></PageShell>
+}
+
 export default function App() {
-  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/members" element={<MembersPage />} /><Route path="/reports" element={<ReportsPageRoute />} /></Routes></BrowserRouter>
+  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/members" element={<MembersPage />} /><Route path="/reports" element={<ReportsPageRoute />} /><Route path="/settings" element={<SettingsPageRoute />} /></Routes></BrowserRouter>
 }

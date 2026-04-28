@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { dataAdapter } from '../lib/dataAdapter'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
+import type { KaddishRequestRecord } from '../types/entities'
 
 type KaddishActionRow = Record<string, React.ReactNode> & { date: string; time: string; location: string; volunteer: string; status: string }
 
@@ -70,7 +73,29 @@ function TreatmentTimeline() {
 
 export function KaddishRequestDetailsPage() {
   const { requestId } = useParams()
-  const request = dataAdapter.kaddishRequests.findById(requestId || '') || dataAdapter.kaddishRequests.findById('K-2025-0321')
+  const fallbackRequest = dataAdapter.kaddishRequests.findById(requestId || '') || dataAdapter.kaddishRequests.findById('K-2025-0321')
+  const [request, setRequest] = useState<KaddishRequestRecord | undefined>(fallbackRequest)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadRequest() {
+      if (!requestId) return
+      try {
+        const row = await supabaseReadAdapter.kaddishRequests.findById(requestId)
+        if (isMounted && row) setRequest(row)
+      } catch {
+        if (isMounted) setRequest(fallbackRequest)
+      }
+    }
+
+    void loadRequest()
+
+    return () => {
+      isMounted = false
+    }
+  }, [requestId, fallbackRequest])
+
   if (!request) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
   const requestStats = [{ label: 'סוג קדיש', value: request.requestType }, { label: 'סטטוס', value: request.status }, { label: 'דחיפות', value: request.urgency }, { label: 'מתנדב', value: request.volunteer }]
   const deceasedDetails = [{ label: 'שם נפטר', value: request.deceasedName }, { label: 'סוג קדיש', value: request.requestType }, { label: 'תאריך התחלה', value: request.date }, { label: 'עיר', value: request.city }, { label: 'סטטוס', value: request.status }, { label: 'דחיפות', value: request.urgency }]

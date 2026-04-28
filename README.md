@@ -124,7 +124,7 @@ Routes checked:
 - /public/status
 Status: build passed, Admin regression passed, and Architect visual QA confirmed.
 
-Sprint 21: Data Layer Foundation — QA Pending
+Sprint 21: Data Layer Foundation — Passed
 Scope: extracted static mock data and entity types from UI pages into dedicated data/type files, added internal data adapter, no backend connection.
 Files:
 - src/types/entities.ts
@@ -136,4 +136,4 @@ Files:
 - src/data/public.ts
 - src/data/index.ts
 - src/lib/dataAdapter.ts
-Status: live in StackBlitz, pending Architect QA.
+Status: build passed and Architect QA confirmed.

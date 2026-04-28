@@ -158,7 +158,7 @@ Files:
 - docs/10-seed-data-notes.md
 Status: build passed and Architect QA confirmed.
 
-Sprint 24: Supabase Schema Implementation / Read-Only Foundation — QA Pending
+Sprint 24: Supabase Schema Implementation / Read-Only Foundation — Passed
 Scope: added Supabase client scaffolding, environment example, schema.sql, seed.sql, DB row types, mappers and read-only adapter with mock fallback. No write operations and no UI behavior changes.
 Files:
 - .env.example
@@ -171,4 +171,4 @@ Files:
 - src/lib/supabaseReadAdapter.ts
 - src/types/supabase.ts
 - docs/11-supabase-readonly-strategy.md
-Status: live in StackBlitz, pending Architect QA.
+Status: build passed and Architect QA confirmed.

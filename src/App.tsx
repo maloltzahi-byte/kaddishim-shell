@@ -1,6 +1,5 @@
 import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 import { Icon, type IconName } from './components/shared/Icon'
-import { Badge } from './components/primitives/Badge'
 import { Button } from './components/primitives/Button'
 import { SearchInput } from './components/primitives/SearchInput'
 import { SelectField } from './components/primitives/SelectField'
@@ -8,6 +7,7 @@ import { DataTable, type CallsRow } from './components/table/DataTable'
 import { Pagination } from './components/table/Pagination'
 
 const navItems = [
+  { label: 'דשבורד ראשי', to: '/' },
   { label: 'קריאות מניין', to: '/calls' },
   { label: 'בקשות קדיש', to: '/' },
   { label: 'מתנדבים', to: '/' },
@@ -87,12 +87,27 @@ const callsData: CallsRow[] = [
   { callId: 'M-2025-0544', city: 'ירושלים', time: '09:00', required: '10', missing: '0', confirmed: '10', status: 'הושלמה', urgency: 'נמוכה', updated: 'לפני 40 דק׳' }
 ]
 
+const callsStats = [
+  { label: 'קריאות פתוחות', value: '28' },
+  { label: 'בטיפול', value: '17' },
+  { label: 'הושלמו היום', value: '18' },
+  { label: 'דחופות', value: '7' }
+]
+
 function FilterBar() {
   return <div className="filter-bar"><Button>יצירת קריאת מניין</Button><SelectField value="שעה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput /></div>
 }
 
+function CallsStats() {
+  return <div className="calls-stats">{callsStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+}
+
+function CallsActivitySummary() {
+  return <section className="calls-activity-summary"><h2>סיכום פעילות קריאות מניין</h2><div><span>שיבוצים שבוצעו היום: <b>34</b></span><span>זמן תגובה ממוצע: <b>6.4 שעות</b></span><span>קריאות ללא מתנדב: <b>7</b></span></div></section>
+}
+
 function CallsList() {
-  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><FilterBar /><DataTable rows={callsData} /><Pagination /></section></div></PageShell>
+  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><CallsStats /><FilterBar /><DataTable rows={callsData} /><Pagination /><CallsActivitySummary /></section></div></PageShell>
 }
 
 export default function App() {

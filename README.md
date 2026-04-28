@@ -59,6 +59,12 @@ Approval Date: 28/04/2026
 Approved By: Architect QA
 Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
-Sprint 6: Settings Screen — QA Pending
+Sprint 6: Settings Screen — Passed
 Route: /settings
+Approval Date: 28/04/2026
+Approved By: Architect QA
+Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
+
+Sprint 7: Structural Refactor — QA Pending
+Scope: App.tsx cleanup, layout extraction, Dashboard extraction, Calls extraction.
 Status: live in StackBlitz, pending Architect QA.

@@ -111,3 +111,15 @@ Routes:
 - /public/thank-you
 - /public/status
 Status: build passed, Admin regression passed, and Architect public visual QA confirmed.
+
+Sprint 20: Public Visual Polish — Passed by Developer, Pending Architect Confirmation
+Scope: visual polish pass across public-facing pages, including header, footer, hero, cards, forms, CTAs, spacing, RTL and overflow.
+Routes checked:
+- /public
+- /public/kaddish-request
+- /public/minyan-request
+- /public/volunteer-join
+- /public/donations
+- /public/thank-you
+- /public/status
+Status: live in StackBlitz, pending Architect QA.

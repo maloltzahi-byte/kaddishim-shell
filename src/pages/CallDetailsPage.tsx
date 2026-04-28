@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { dataAdapter } from '../lib/dataAdapter'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
+import type { CallRecord } from '../types/entities'
 
 type AssignedVolunteerRow = Record<string, React.ReactNode> & {
   volunteerName: string
@@ -77,7 +80,29 @@ function TreatmentTimeline() {
 
 export function CallDetailsPage() {
   const { callId } = useParams()
-  const call = dataAdapter.calls.findById(callId || '') || dataAdapter.calls.findById('M-2025-0548')
+  const fallbackCall = dataAdapter.calls.findById(callId || '') || dataAdapter.calls.findById('M-2025-0548')
+  const [call, setCall] = useState<CallRecord | undefined>(fallbackCall)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadCall() {
+      if (!callId) return
+      try {
+        const row = await supabaseReadAdapter.calls.findById(callId)
+        if (isMounted && row) setCall(row)
+      } catch {
+        if (isMounted) setCall(fallbackCall)
+      }
+    }
+
+    void loadCall()
+
+    return () => {
+      isMounted = false
+    }
+  }, [callId, fallbackCall])
+
   if (!call) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
   const callStats = [{ label: 'נדרשים', value: call.required }, { label: 'אישרו', value: call.confirmed }, { label: 'חסרים', value: call.missing }, { label: 'דחיפות', value: call.urgency }]
   const callDetails = [{ label: 'מס׳ קריאה', value: call.callId }, { label: 'עיר', value: call.city }, { label: 'שעה', value: call.time }, { label: 'סטטוס', value: call.status }, { label: 'דחיפות', value: call.urgency }, { label: 'עדכון אחרון', value: call.updated }]

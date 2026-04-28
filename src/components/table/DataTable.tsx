@@ -1,31 +1,11 @@
-import { Badge, type BadgeTone } from '../primitives/Badge'
+import type { ReactNode } from 'react'
 
-export type CallsRow = {
-  callId: string
-  city: string
-  time: string
-  required: string
-  missing: string
-  confirmed: string
-  status: string
-  urgency: string
-  updated: string
+export type Column<T> = {
+  key: keyof T | string
+  label: string
+  render?: (row: T) => ReactNode
 }
 
-const columns = ['מס׳ קריאה', 'עיר', 'שעה', 'נדרשים', 'חסרים', 'אישרו', 'סטטוס', 'דחיפות', 'עדכון אחרון', 'פעולות']
-
-function statusTone(status: string): BadgeTone {
-  if (status === 'הושלמה') return 'success'
-  if (status === 'בטיפול') return 'warning'
-  return 'neutral'
-}
-
-function urgencyTone(urgency: string): BadgeTone {
-  if (urgency === 'גבוהה') return 'danger'
-  if (urgency === 'רגילה') return 'warning'
-  return 'success'
-}
-
-export function DataTable({ rows }: { rows: CallsRow[] }) {
-  return <div className="table-wrap"><table className="data-table"><thead><tr>{columns.map(col => <th key={col}>{col}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.callId}><td>{row.callId}</td><td>{row.city}</td><td>{row.time}</td><td>{row.required}</td><td>{row.missing}</td><td>{row.confirmed}</td><td><Badge tone={statusTone(row.status)}>{row.status}</Badge></td><td><Badge tone={urgencyTone(row.urgency)}>{row.urgency}</Badge></td><td>{row.updated}</td><td><button className="table-action">צפייה</button></td></tr>)}</tbody></table></div>
+export function DataTable<T extends Record<string, ReactNode>>({ columns, rows }: { columns: Column<T>[]; rows: T[] }) {
+  return <div className="table-wrap"><table className="data-table"><thead><tr>{columns.map(col => <th key={String(col.key)}>{col.label}</th>)}</tr></thead><tbody>{rows.map((row, index) => <tr key={String(row.id ?? row.callId ?? row.requestId ?? index)}>{columns.map(col => <td key={String(col.key)}>{col.render ? col.render(row) : row[col.key as keyof T]}</td>)}</tr>)}</tbody></table></div>
 }

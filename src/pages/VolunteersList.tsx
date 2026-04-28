@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
@@ -64,7 +63,7 @@ function VolunteersStats() {
 }
 
 function VolunteersFilterBar() {
-  return <div className="filter-bar"><Button>הוספת מתנדב</Button><SelectField value="זמינות" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם או טלפון" /></div>
+  return <div className="filter-bar"><Link className="btn btn-primary" to="/volunteers/new">הוספת מתנדב</Link><SelectField value="זמינות" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם או טלפון" /></div>
 }
 
 function VolunteersActivitySummary() {

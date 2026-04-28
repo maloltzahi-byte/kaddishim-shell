@@ -53,6 +53,12 @@ Approval Date: 28/04/2026
 Approved By: Architect QA
 Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
-Sprint 5: Reports Screen — QA Pending
+Sprint 5: Reports Screen — Passed
 Route: /reports
+Approval Date: 28/04/2026
+Approved By: Architect QA
+Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
+
+Sprint 6: Settings Screen — QA Pending
+Route: /settings
 Status: live in StackBlitz, pending Architect QA.

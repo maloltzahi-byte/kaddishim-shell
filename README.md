@@ -100,7 +100,7 @@ Scope: visual consistency pass across admin list, detail and creation screens.
 Includes: spacing, buttons, badges, active state, overflow, panels, tables and RTL alignment.
 Status: build passed and Architect visual QA confirmed.
 
-Sprint 19: Public Shell — QA Pending
+Sprint 19: Public Shell — Passed
 Scope: static public-facing shell and routes for public home, kaddish request, minyan request, volunteer join, donations, thank-you and status pages.
 Routes:
 - /public
@@ -110,4 +110,4 @@ Routes:
 - /public/donations
 - /public/thank-you
 - /public/status
-Status: live in StackBlitz, pending Architect QA.
+Status: build passed, Admin regression passed, and Architect public visual QA confirmed.

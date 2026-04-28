@@ -1,31 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
+import { dataAdapter } from '../lib/dataAdapter'
 
-type VolunteerAssignmentRow = Record<string, React.ReactNode> & {
-  date: string
-  activityType: string
-  location: string
-  time: string
-  status: string
-}
-
-const volunteerStats = [
-  { label: 'סטטוס', value: 'פעיל' },
-  { label: 'זמינות', value: 'היום' },
-  { label: 'שיבוצים השבוע', value: '4' },
-  { label: 'שיבוצים החודש', value: '18' }
-]
-
-const volunteerDetails = [
-  { label: 'שם מלא', value: 'אברהם כהן' },
-  { label: 'מס׳ מתנדב', value: 'V-2025-0142' },
-  { label: 'עיר', value: 'ירושלים' },
-  { label: 'טלפון', value: '050-1234567' },
-  { label: 'סטטוס', value: 'פעיל' },
-  { label: 'עדכון אחרון', value: 'לפני 4 דק׳' }
-]
+type VolunteerAssignmentRow = Record<string, React.ReactNode> & { date: string; activityType: string; location: string; time: string; status: string }
 
 const availabilityDetails = [
   { label: 'זמינות נוכחית', value: 'היום' },
@@ -72,8 +51,8 @@ const assignmentColumns: Column<VolunteerAssignmentRow>[] = [
   { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
 ]
 
-function VolunteerStats() {
-  return <div className="calls-stats">{volunteerStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+function VolunteerStats({ rows }: { rows: Array<{ label: string; value: string }> }) {
+  return <div className="calls-stats">{rows.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function DetailsPanel({ title, rows }: { title: string; rows: Array<{ label: string; value: string }> }) {
@@ -89,5 +68,10 @@ function TreatmentTimeline() {
 }
 
 export function VolunteerDetailsPage() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדב V-2025-0142</h1><p>ניהול פרטי המתנדב, זמינות, שיבוצים ומעקב אחר פעילות</p></div><section className="calls-panel"><HeaderActions /><VolunteerStats /><div className="reports-grid"><DetailsPanel title="פרטי מתנדב" rows={volunteerDetails} /><DetailsPanel title="זמינות" rows={availabilityDetails} /><DetailsPanel title="מדדי פעילות" rows={activityMetrics} /></div><section className="reports-table-section"><h2>שיבוצים אחרונים</h2><DataTable columns={assignmentColumns} rows={recentAssignments} /></section><TreatmentTimeline /></section></div>
+  const { volunteerId } = useParams()
+  const volunteer = dataAdapter.volunteers.findById(volunteerId || '') || dataAdapter.volunteers.findById('V-2025-0142')
+  if (!volunteer) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
+  const volunteerStats = [{ label: 'סטטוס', value: volunteer.status }, { label: 'זמינות', value: volunteer.availability }, { label: 'שיבוצים השבוע', value: volunteer.weeklyAssignments }, { label: 'שיבוצים החודש', value: '18' }]
+  const volunteerDetails = [{ label: 'שם מלא', value: volunteer.fullName }, { label: 'מס׳ מתנדב', value: volunteer.volunteerId }, { label: 'עיר', value: volunteer.city }, { label: 'טלפון', value: volunteer.phone }, { label: 'סטטוס', value: volunteer.status }, { label: 'עדכון אחרון', value: volunteer.updated }]
+  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדב {volunteer.volunteerId}</h1><p>ניהול פרטי המתנדב, זמינות, שיבוצים ומעקב אחר פעילות</p></div><section className="calls-panel"><HeaderActions /><VolunteerStats rows={volunteerStats} /><div className="reports-grid"><DetailsPanel title="פרטי מתנדב" rows={volunteerDetails} /><DetailsPanel title="זמינות" rows={availabilityDetails} /><DetailsPanel title="מדדי פעילות" rows={activityMetrics} /></div><section className="reports-table-section"><h2>שיבוצים אחרונים</h2><DataTable columns={assignmentColumns} rows={recentAssignments} /></section><TreatmentTimeline /></section></div>
 }

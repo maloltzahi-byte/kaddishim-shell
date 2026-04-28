@@ -35,6 +35,12 @@ Approval Date: 28/04/2026
 Approved By: Architect QA
 Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
-Sprint 2: Kaddish Requests Screen — implemented, pending live screenshot QA
+Sprint 2: Kaddish Requests Screen — Passed
 Route: /kaddish-requests
-Scope: reused DataTable generic component, shared filter structure, KPI row, hardcoded kaddish request data, action column and bottom activity summary.
+Approval Date: 28/04/2026
+Approved By: Architect QA
+Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
+
+Sprint 3: Volunteers Screen — QA Pending
+Route: /volunteers
+Status: live in StackBlitz, pending Architect QA.

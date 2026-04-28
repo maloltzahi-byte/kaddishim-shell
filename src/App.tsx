@@ -3,13 +3,15 @@ import { Icon, type IconName } from './components/shared/Icon'
 import { Button } from './components/primitives/Button'
 import { SearchInput } from './components/primitives/SearchInput'
 import { SelectField } from './components/primitives/SelectField'
-import { DataTable, type CallsRow } from './components/table/DataTable'
+import { Badge } from './components/primitives/Badge'
+import { DataTable, type Column } from './components/table/DataTable'
 import { Pagination } from './components/table/Pagination'
+import { KaddishRequestsList } from './pages/KaddishRequestsList'
 
 const navItems = [
   { label: 'דשבורד ראשי', to: '/' },
   { label: 'קריאות מניין', to: '/calls' },
-  { label: 'בקשות קדיש', to: '/' },
+  { label: 'בקשות קדיש', to: '/kaddish-requests' },
   { label: 'מתנדבים', to: '/' },
   { label: 'חברים', to: '/' },
   { label: 'דוחות', to: '/' },
@@ -79,12 +81,37 @@ function Dashboard() {
   return <PageShell><div className="content"><div className="title"><h1>דשבורד ראשי</h1><p>סקירה כללית של הפעילות במערכת</p></div><div className="kpis"><StatCard label="פעילות היום" value="87" delta="23 השבוע" icon="clock" /><StatCard label="מתנדבים פעילים" value="142" delta="הכל" icon="users" /><StatCard label="בקשות קדיש" value="56" delta="8 חדשות" icon="mail" /><StatCard label="קריאות פתוחות" value="28" delta="12 חדשות" icon="bell" /></div><div className="grid"><Panel title="פעילות היום" footerLink="הצג הכל"><ActivityList /></Panel><Panel title="פריטים דחופים" footerLink="הצג הכל"><UrgentList /></Panel><Panel title="פעולות מהירות"><QuickActions /></Panel></div><StatusSummary /></div></PageShell>
 }
 
+type CallsRow = Record<string, React.ReactNode> & {
+  callId: string
+  city: string
+  time: string
+  required: string
+  missing: string
+  confirmed: string
+  status: string
+  urgency: string
+  updated: string
+}
+
 const callsData: CallsRow[] = [
   { callId: 'M-2025-0548', city: 'בני ברק', time: '07:00', required: '10', missing: '2', confirmed: '8', status: 'פתוחה', urgency: 'גבוהה', updated: 'לפני 5 דק׳' },
   { callId: 'M-2025-0547', city: 'אלעד', time: '06:45', required: '10', missing: '4', confirmed: '6', status: 'בטיפול', urgency: 'גבוהה', updated: 'לפני 12 דק׳' },
   { callId: 'M-2025-0546', city: 'פתח תקוה', time: '07:15', required: '10', missing: '1', confirmed: '9', status: 'בטיפול', urgency: 'רגילה', updated: 'לפני 18 דק׳' },
   { callId: 'M-2025-0545', city: 'בית שמש', time: '08:00', required: '10', missing: '0', confirmed: '10', status: 'הושלמה', urgency: 'רגילה', updated: 'לפני 25 דק׳' },
   { callId: 'M-2025-0544', city: 'ירושלים', time: '09:00', required: '10', missing: '0', confirmed: '10', status: 'הושלמה', urgency: 'נמוכה', updated: 'לפני 40 דק׳' }
+]
+
+const callsColumns: Column<CallsRow>[] = [
+  { key: 'callId', label: 'מס׳ קריאה' },
+  { key: 'city', label: 'עיר' },
+  { key: 'time', label: 'שעה' },
+  { key: 'required', label: 'נדרשים' },
+  { key: 'missing', label: 'חסרים' },
+  { key: 'confirmed', label: 'אישרו' },
+  { key: 'status', label: 'סטטוס', render: row => <Badge tone={row.status === 'הושלמה' ? 'success' : row.status === 'בטיפול' ? 'warning' : 'neutral'}>{row.status}</Badge> },
+  { key: 'urgency', label: 'דחיפות', render: row => <Badge tone={row.urgency === 'גבוהה' ? 'danger' : row.urgency === 'רגילה' ? 'warning' : 'success'}>{row.urgency}</Badge> },
+  { key: 'updated', label: 'עדכון אחרון' },
+  { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
 ]
 
 const callsStats = [
@@ -107,9 +134,13 @@ function CallsActivitySummary() {
 }
 
 function CallsList() {
-  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><CallsStats /><FilterBar /><DataTable rows={callsData} /><Pagination /><CallsActivitySummary /></section></div></PageShell>
+  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><CallsStats /><FilterBar /><DataTable columns={callsColumns} rows={callsData} /><Pagination /><CallsActivitySummary /></section></div></PageShell>
+}
+
+function KaddishRequestsPage() {
+  return <PageShell><KaddishRequestsList /></PageShell>
 }
 
 export default function App() {
-  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /></Routes></BrowserRouter>
+  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /></Routes></BrowserRouter>
 }

@@ -147,7 +147,7 @@ Includes:
 - Undefined/fallback safeguards
 Status: build passed and Architect QA confirmed.
 
-Sprint 23: Data Contract Hardening / Supabase Readiness — QA Pending
+Sprint 23: Data Contract Hardening / Supabase Readiness — Passed
 Scope: hardened entity types, status enums, dataAdapter contract, UI/data mapping, Supabase schema draft and seed-readiness documentation. No backend connection.
 Files:
 - src/types/entities.ts
@@ -156,4 +156,4 @@ Files:
 - docs/08-supabase-schema-draft.md
 - docs/09-ui-data-mapping.md
 - docs/10-seed-data-notes.md
-Status: live in StackBlitz, pending Architect QA.
+Status: build passed and Architect QA confirmed.

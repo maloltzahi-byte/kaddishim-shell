@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
@@ -61,7 +60,7 @@ function MembersStats() {
 }
 
 function MembersFilterBar() {
-  return <div className="filter-bar"><Button>הוספת חבר</Button><SelectField value="סוג חברות" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם, טלפון או אימייל" /></div>
+  return <div className="filter-bar"><Link className="btn btn-primary" to="/members/new">הוספת חבר</Link><SelectField value="סוג חברות" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם, טלפון או אימייל" /></div>
 }
 
 function MembersActivitySummary() {

@@ -86,11 +86,16 @@ Route: /members/new
 Scope: static visual shell for creating a new member.
 Status: live in StackBlitz, pending Architect QA.
 
-Sprint 17: Creation Flows QA — QA Pending
-Scope: verified navigation from list screens to creation screens, verified route order, verified return-link targets by code inspection, and marked live QA for Architect confirmation.
+Sprint 17: Creation Flows QA — Passed
+Scope: verified navigation from list screens to creation screens, verified route order, verified detail routes and build.
 Routes checked:
 - /calls -> /calls/new
 - /kaddish-requests -> /kaddish-requests/new
 - /volunteers -> /volunteers/new
 - /members -> /members/new
-Status: pending Architect QA and live build confirmation in StackBlitz.
+Status: build passed in StackBlitz.
+
+Sprint 18: Admin Visual Polish — QA Pending
+Scope: visual consistency pass across admin list, detail and creation screens.
+Includes: spacing, buttons, badges, active state, overflow, panels, tables and RTL alignment.
+Status: live in StackBlitz, pending Architect QA.

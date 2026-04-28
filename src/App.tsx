@@ -9,6 +9,7 @@ import { Pagination } from './components/table/Pagination'
 import { KaddishRequestsList } from './pages/KaddishRequestsList'
 import { VolunteersList } from './pages/VolunteersList'
 import { MembersList } from './pages/MembersList'
+import { ReportsPage } from './pages/ReportsPage'
 
 const navItems = [
   { label: 'דשבורד ראשי', to: '/' },
@@ -16,7 +17,7 @@ const navItems = [
   { label: 'בקשות קדיש', to: '/kaddish-requests' },
   { label: 'מתנדבים', to: '/volunteers' },
   { label: 'חברים', to: '/members' },
-  { label: 'דוחות', to: '/' },
+  { label: 'דוחות', to: '/reports' },
   { label: 'הגדרות', to: '/' }
 ]
 
@@ -151,6 +152,10 @@ function MembersPage() {
   return <PageShell><MembersList /></PageShell>
 }
 
+function ReportsPageRoute() {
+  return <PageShell><ReportsPage /></PageShell>
+}
+
 export default function App() {
-  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/members" element={<MembersPage />} /></Routes></BrowserRouter>
+  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/members" element={<MembersPage />} /><Route path="/reports" element={<ReportsPageRoute />} /></Routes></BrowserRouter>
 }

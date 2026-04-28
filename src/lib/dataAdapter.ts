@@ -27,4 +27,6 @@ export const dataAdapter = {
     homeActions: () => publicHomeActions,
     homeSections: () => publicHomeSections
   }
-}
+} as const
+
+export type DataAdapter = typeof dataAdapter

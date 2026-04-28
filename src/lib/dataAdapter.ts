@@ -1,4 +1,4 @@
-import { callsData, kaddishRequestsData, membersData, volunteersData } from '../data'
+import { callsData, kaddishRequestsData, membersData, publicHomeActions, publicHomeSections, reportsActivityByType, reportsCareStatus, reportsManagerAlerts, reportsStats, volunteersData } from '../data'
 
 export const dataAdapter = {
   calls: {
@@ -16,5 +16,15 @@ export const dataAdapter = {
   members: {
     list: () => membersData,
     findById: (id: string) => membersData.find(item => item.memberId === id)
+  },
+  reports: {
+    stats: () => reportsStats,
+    activityByType: () => reportsActivityByType,
+    careStatus: () => reportsCareStatus,
+    alerts: () => reportsManagerAlerts
+  },
+  public: {
+    homeActions: () => publicHomeActions,
+    homeSections: () => publicHomeSections
   }
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -6,6 +7,7 @@ import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
 import { PageShell } from '../components/layout/PageShell'
 import { callsData, callsStats } from '../data/calls'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
 import type { CallRecord } from '../types/entities'
 
 type CallsRow = Record<string, React.ReactNode> & CallRecord
@@ -36,5 +38,26 @@ function CallsActivitySummary() {
 }
 
 export function CallsList() {
-  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><CallsStats /><FilterBar /><DataTable columns={callsColumns} rows={callsData as CallsRow[]} /><Pagination /><CallsActivitySummary /></section></div></PageShell>
+  const [calls, setCalls] = useState<CallRecord[]>(callsData)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadCalls() {
+      try {
+        const rows = await supabaseReadAdapter.calls.list()
+        if (isMounted && rows.length > 0) setCalls(rows)
+      } catch {
+        if (isMounted) setCalls(callsData)
+      }
+    }
+
+    void loadCalls()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><CallsStats /><FilterBar /><DataTable columns={callsColumns} rows={calls as CallsRow[]} /><Pagination /><CallsActivitySummary /></section></div></PageShell>
 }

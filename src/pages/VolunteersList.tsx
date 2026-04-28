@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -55,7 +56,7 @@ const columns: Column<VolunteerRow>[] = [
   { key: 'weeklyAssignments', label: 'שיבוצים השבוע' },
   { key: 'status', label: 'סטטוס', render: row => <Badge tone={statusTone(String(row.status))}>{row.status}</Badge> },
   { key: 'updated', label: 'עדכון אחרון' },
-  { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
+  { key: 'actions', label: 'פעולות', render: row => <Link className="table-action" to={`/volunteers/${row.volunteerId}`}>צפייה</Link> }
 ]
 
 function VolunteersStats() {

@@ -4,7 +4,9 @@
 
 Sprint 24 establishes the database foundation only. The React UI remains connected mainly to the existing synchronous `dataAdapter` and static mock data. This avoids introducing async rendering, loading states, auth decisions or write risks across the whole system before the read strategy is proven.
 
-Sprint 25 introduces a limited pilot for `/calls` only. No other screen is connected to Supabase during this pilot.
+Sprint 25 introduced a limited pilot for `/calls` only.
+
+Sprint 26 expands the same read-only model to `/kaddish-requests`, `/volunteers` and `/members` list screens only. Detail pages, create pages, public forms, reports and settings remain outside the Supabase read integration scope.
 
 ## 2. Fallback strategy
 
@@ -14,7 +16,7 @@ The `supabaseReadAdapter` is read-only and defensive:
 - If `supabase` is not configured, it returns mock data.
 - If a Supabase query returns an error, it returns mock data.
 - If a Supabase query returns no data, it returns mock data.
-- If a Supabase table is empty, it returns mock data to prevent empty list screens during the read-only pilot.
+- If a Supabase table is empty, it returns mock data to prevent empty list screens during the read-only integration stages.
 
 This means missing ENV values must not break build, render or navigation.
 
@@ -71,7 +73,7 @@ The read-only adapter exposes async `list()` methods for:
 
 ## 6. Sprint 25 pilot behavior
 
-`Sprint 25 — Read Integration Pilot` connects only `/calls` to `supabaseReadAdapter.calls.list()`.
+`Sprint 25 — Read Integration Pilot` connected only `/calls` to `supabaseReadAdapter.calls.list()`.
 
 Behavior:
 
@@ -81,7 +83,24 @@ Behavior:
 - If Supabase is missing, fails, returns no data or returns an empty table, the screen keeps mock data.
 - There is no visible UI change and no global async refactor.
 
-## 7. What remains forbidden until approval
+## 7. Sprint 26 expansion behavior
+
+`Sprint 26 — Read Integration Expansion` connects only these list screens:
+
+- `/kaddish-requests` through `supabaseReadAdapter.kaddishRequests.list()`
+- `/volunteers` through `supabaseReadAdapter.volunteers.list()`
+- `/members` through `supabaseReadAdapter.members.list()`
+
+Behavior:
+
+- Each screen renders immediately from its existing mock data.
+- After render, each screen attempts a read-only Supabase fetch through the matching adapter method.
+- If Supabase returns mapped records, the relevant table updates.
+- If Supabase is missing, fails, returns no data or returns an empty table, the relevant screen keeps mock data.
+- Detail pages, create pages, public forms, reports and settings are not connected in this sprint.
+- There is no visible UI change and no route/CSS/schema/seed change.
+
+## 8. What remains forbidden until approval
 
 Do not add yet:
 
@@ -100,13 +119,15 @@ Do not add yet:
 - SMS
 - production RLS policy decisions
 
-## 8. QA expectations
+## 9. QA expectations
 
-Sprint 25 passes only if:
+Sprint 26 passes only if:
 
 - build passes without Supabase ENV keys
-- `/calls` renders with mock fallback
-- `/calls` can read from Supabase when ENV and table data exist
+- `/calls` remains stable from Sprint 25
+- `/kaddish-requests` renders with mock fallback and read-only Supabase support
+- `/volunteers` renders with mock fallback and read-only Supabase support
+- `/members` renders with mock fallback and read-only Supabase support
 - UI remains visually unchanged
 - no route breaks
 - no `undefined` appears

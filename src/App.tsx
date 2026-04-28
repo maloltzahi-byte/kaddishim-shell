@@ -8,6 +8,7 @@ import { KaddishRequestDetailsPage } from './pages/KaddishRequestDetailsPage'
 import { VolunteersList } from './pages/VolunteersList'
 import { VolunteerDetailsPage } from './pages/VolunteerDetailsPage'
 import { MembersList } from './pages/MembersList'
+import { MemberDetailsPage } from './pages/MemberDetailsPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 
@@ -31,6 +32,10 @@ function MembersPage() {
   return <PageShell><MembersList /></PageShell>
 }
 
+function MemberDetailsPageRoute() {
+  return <PageShell><MemberDetailsPage /></PageShell>
+}
+
 function ReportsPageRoute() {
   return <PageShell><ReportsPage /></PageShell>
 }
@@ -44,5 +49,5 @@ function CallDetailsPageRoute() {
 }
 
 export default function App() {
-  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/calls/:callId" element={<CallDetailsPageRoute />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/kaddish-requests/:requestId" element={<KaddishRequestDetailsPageRoute />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/volunteers/:volunteerId" element={<VolunteerDetailsPageRoute />} /><Route path="/members" element={<MembersPage />} /><Route path="/reports" element={<ReportsPageRoute />} /><Route path="/settings" element={<SettingsPageRoute />} /></Routes></BrowserRouter>
+  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/calls/:callId" element={<CallDetailsPageRoute />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/kaddish-requests/:requestId" element={<KaddishRequestDetailsPageRoute />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/volunteers/:volunteerId" element={<VolunteerDetailsPageRoute />} /><Route path="/members" element={<MembersPage />} /><Route path="/members/:memberId" element={<MemberDetailsPageRoute />} /><Route path="/reports" element={<ReportsPageRoute />} /><Route path="/settings" element={<SettingsPageRoute />} /></Routes></BrowserRouter>
 }

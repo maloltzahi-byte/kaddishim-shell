@@ -1,6 +1,16 @@
-type IconName = 'clock' | 'users' | 'mail' | 'bell' | 'clipboard' | 'home' | 'flame' | 'alert' | 'file' | 'plus' | 'search' | 'user' | 'info'
+import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 
-const navItems = ['קריאות מניין', 'בקשות קדיש', 'מתנדבים', 'חברים', 'דוחות', 'הגדרות']
+type IconName = 'clock' | 'users' | 'mail' | 'bell' | 'clipboard' | 'home' | 'flame' | 'alert' | 'file' | 'plus' | 'search' | 'user' | 'info' | 'chevron'
+type BadgeTone = 'success' | 'warning' | 'danger' | 'neutral'
+
+const navItems = [
+  { label: 'קריאות מניין', to: '/calls' },
+  { label: 'בקשות קדיש', to: '/' },
+  { label: 'מתנדבים', to: '/' },
+  { label: 'חברים', to: '/' },
+  { label: 'דוחות', to: '/' },
+  { label: 'הגדרות', to: '/' }
+]
 
 function Icon({ name, size = 22, className = '' }: { name: IconName; size?: number; className?: string }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, className }
@@ -18,6 +28,7 @@ function Icon({ name, size = 22, className = '' }: { name: IconName; size?: numb
     case 'search': return <svg {...common}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     case 'user': return <svg {...common}><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
     case 'info': return <svg {...common}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    case 'chevron': return <svg {...common}><path d="m6 9 6 6 6-6"/></svg>
   }
 }
 
@@ -26,7 +37,12 @@ function LogoBlock() {
 }
 
 function TopNav() {
-  return <header className="top"><LogoBlock /><nav className="nav">{navItems.map(item => <span key={item}>{item}</span>)}<span className="q">?</span></nav></header>
+  const location = useLocation()
+  return <header className="top"><LogoBlock /><nav className="nav">{navItems.map(item => <Link className={location.pathname === item.to ? 'active' : ''} key={item.label} to={item.to}>{item.label}</Link>)}<span className="q">?</span></nav></header>
+}
+
+function PageShell({ children }: { children: React.ReactNode }) {
+  return <main className="app-wrap"><section className="shell"><TopNav />{children}</section></main>
 }
 
 function StatCard({ label, value, delta, icon }: { label: string; value: string; delta: string; icon: IconName }) {
@@ -35,6 +51,22 @@ function StatCard({ label, value, delta, icon }: { label: string; value: string;
 
 function Panel({ title, footerLink, children }: { title: string; footerLink?: string; children: React.ReactNode }) {
   return <section className="panel"><h2>{title}</h2>{children}{footerLink && <div className="panel-foot"><a>{footerLink}</a></div>}</section>
+}
+
+function Badge({ tone, children }: { tone: BadgeTone; children: React.ReactNode }) {
+  return <span className={`badge badge-${tone}`}>{children}</span>
+}
+
+function Button({ children, variant = 'primary' }: { children: React.ReactNode; variant?: 'primary' | 'secondary' | 'outline' | 'ghost' }) {
+  return <button className={`btn btn-${variant}`}>{children}</button>
+}
+
+function SearchInput() {
+  return <label className="search-input"><Icon name="search" size={15} /><input placeholder="חיפוש לפי מספר או עיר" /></label>
+}
+
+function SelectField({ value }: { value: string }) {
+  return <button className="select-field"><span>{value}</span><Icon name="chevron" size={14} /></button>
 }
 
 const activity = [
@@ -75,6 +107,36 @@ function StatusSummary() {
   return <section className="summary"><h2>סיכום סטטוסים</h2><div className="sum-grid">{cells.map(cell => <div className="sum-cell" key={cell.label}><span className="label">{cell.label}</span><strong className="val">{cell.value}</strong></div>)}</div></section>
 }
 
+function Dashboard() {
+  return <PageShell><div className="content"><div className="title"><h1>דשבורד ראשי</h1><p>סקירה כללית של הפעילות במערכת</p></div><div className="kpis"><StatCard label="פעילות היום" value="87" delta="23 השבוע" icon="clock" /><StatCard label="מתנדבים פעילים" value="142" delta="הכל" icon="users" /><StatCard label="בקשות קדיש" value="56" delta="8 חדשות" icon="mail" /><StatCard label="קריאות פתוחות" value="28" delta="12 חדשות" icon="bell" /></div><div className="grid"><Panel title="פעילות היום" footerLink="הצג הכל"><ActivityList /></Panel><Panel title="פריטים דחופים" footerLink="הצג הכל"><UrgentList /></Panel><Panel title="פעולות מהירות"><QuickActions /></Panel></div><StatusSummary /></div></PageShell>
+}
+
+const callsData = [
+  { callId: 'M-2025-0548', city: 'בני ברק', time: '07:00', required: '10', missing: '2', confirmed: '8', status: 'פתוחה', urgency: 'גבוהה', updated: 'לפני 5 דק׳' },
+  { callId: 'M-2025-0547', city: 'אלעד', time: '06:45', required: '10', missing: '4', confirmed: '6', status: 'בטיפול', urgency: 'גבוהה', updated: 'לפני 12 דק׳' },
+  { callId: 'M-2025-0546', city: 'פתח תקוה', time: '07:15', required: '10', missing: '1', confirmed: '9', status: 'בטיפול', urgency: 'רגילה', updated: 'לפני 18 דק׳' },
+  { callId: 'M-2025-0545', city: 'בית שמש', time: '08:00', required: '10', missing: '0', confirmed: '10', status: 'הושלמה', urgency: 'רגילה', updated: 'לפני 25 דק׳' },
+  { callId: 'M-2025-0544', city: 'ירושלים', time: '09:00', required: '10', missing: '0', confirmed: '10', status: 'הושלמה', urgency: 'נמוכה', updated: 'לפני 40 דק׳' }
+]
+
+const columns = ['מס׳ קריאה', 'עיר', 'שעה', 'נדרשים', 'חסרים', 'אישרו', 'סטטוס', 'דחיפות', 'עדכון אחרון']
+
+function CallsTable() {
+  return <div className="table-wrap"><table className="data-table"><thead><tr>{columns.map(col => <th key={col}>{col}</th>)}</tr></thead><tbody>{callsData.map(row => <tr key={row.callId}><td>{row.callId}</td><td>{row.city}</td><td>{row.time}</td><td>{row.required}</td><td>{row.missing}</td><td>{row.confirmed}</td><td><Badge tone={row.status === 'הושלמה' ? 'success' : row.status === 'בטיפול' ? 'warning' : 'neutral'}>{row.status}</Badge></td><td><Badge tone={row.urgency === 'גבוהה' ? 'danger' : row.urgency === 'רגילה' ? 'warning' : 'success'}>{row.urgency}</Badge></td><td>{row.updated}</td></tr>)}</tbody></table></div>
+}
+
+function Pagination() {
+  return <div className="pagination"><span>הצגה 1-5 מתוך 128</span><div className="pages"><button>הבא ←</button><button>5</button><button>4</button><button>3</button><button>2</button><button className="current">1</button><button>→ קודם</button></div></div>
+}
+
+function FilterBar() {
+  return <div className="filter-bar"><Button>יצירת קריאת מניין</Button><SelectField value="שעה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput /></div>
+}
+
+function CallsList() {
+  return <PageShell><div className="content calls-content"><div className="title calls-title"><h1>קריאות מניין</h1><p>רשימת הקריאות הפעילות והמתקדמות במערכת</p></div><section className="calls-panel"><FilterBar /><CallsTable /><Pagination /></section></div></PageShell>
+}
+
 export default function App() {
-  return <main className="app-wrap"><section className="shell"><TopNav /><div className="content"><div className="title"><h1>דשבורד ראשי</h1><p>סקירה כללית של הפעילות במערכת</p></div><div className="kpis"><StatCard label="פעילות היום" value="87" delta="23 השבוע" icon="clock" /><StatCard label="מתנדבים פעילים" value="142" delta="הכל" icon="users" /><StatCard label="בקשות קדיש" value="56" delta="8 חדשות" icon="mail" /><StatCard label="קריאות פתוחות" value="28" delta="12 חדשות" icon="bell" /></div><div className="grid"><Panel title="פעילות היום" footerLink="הצג הכל"><ActivityList /></Panel><Panel title="פריטים דחופים" footerLink="הצג הכל"><UrgentList /></Panel><Panel title="פעולות מהירות"><QuickActions /></Panel></div><StatusSummary /></div></section></main>
+  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /></Routes></BrowserRouter>
 }

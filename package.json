@@ -10,6 +10,7 @@
     "qa:screenshot": "chromium --headless --disable-gpu --no-sandbox --window-size=1440,1024 --screenshot=qa/dashboard-v3.png http://localhost:4173"
   },
   "dependencies": {
+    "@supabase/supabase-js": "latest",
     "@vitejs/plugin-react": "latest",
     "vite": "latest",
     "typescript": "latest",

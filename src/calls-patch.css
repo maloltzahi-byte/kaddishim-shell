@@ -30,4 +30,7 @@
 .settings-panel .report-metric-list { flex: 1; }
 .settings-panel-action { margin-top: 12px; text-align: left; }
 .settings-panel-action .btn { min-width: 118px; padding: 0 14px; }
+.row-main { min-width: 0; max-width: calc(100% - 56px); }
+.row-text { min-width: 0; max-width: 100%; }
+.row-text b, .row-text small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 900px) { .calls-stats, .calls-activity-summary div, .reports-grid { grid-template-columns: 1fr; } }

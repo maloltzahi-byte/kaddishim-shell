@@ -29,5 +29,7 @@ Approval Date: 28/04/2026
 Approved By: Architect QA Overlay
 Cosmetic Punch List: 4 items deferred to Final Polish sprint
 
-Sprint 1: Calls List Screen — in progress
-Scope: /calls route, generic table primitives, filter bar, hardcoded calls list data.
+Sprint 1: Calls List Screen — QA Patch Applied
+Route: /calls
+Status: live in StackBlitz, pending Architect Overlay QA.
+Patch contents: dashboard nav item, calls KPI row, actions column, activity summary block, denser table/filter styling.

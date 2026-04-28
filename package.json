@@ -18,6 +18,8 @@
     "react-router-dom": "latest"
   },
   "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "tailwindcss": "latest",
     "postcss": "latest",
     "autoprefixer": "latest"

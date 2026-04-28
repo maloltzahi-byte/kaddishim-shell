@@ -1,6 +1,6 @@
 type IconName = 'clock' | 'users' | 'mail' | 'bell' | 'clipboard' | 'home' | 'flame' | 'alert' | 'file' | 'plus' | 'search' | 'user' | 'info'
 
-const navItems = ['קריאות מניין', 'בקשות קדיש', 'מתנדבים', 'התראות', 'הגדרות']
+const navItems = ['קריאות מניין', 'בקשות קדיש', 'מתנדבים', 'חברים', 'דוחות', 'הגדרות']
 
 function Icon({ name, size = 22, className = '' }: { name: IconName; size?: number; className?: string }) {
   const common = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, className }

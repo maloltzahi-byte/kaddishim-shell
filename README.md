@@ -173,11 +173,11 @@ Files:
 - docs/11-supabase-readonly-strategy.md
 Status: build passed and Architect QA confirmed.
 
-Sprint 25: Read Integration Pilot — Implemented, pending Architect QA
+Sprint 25: Read Integration Pilot — Passed
 Scope: connected `/calls` only to `supabaseReadAdapter.calls.list()` with mock data as the initial render and full fallback if Supabase is not configured, fails, or returns empty data. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
 Files:
 - src/pages/CallsList.tsx
 - src/lib/supabaseReadAdapter.ts
 - README.md
 - docs/11-supabase-readonly-strategy.md
-Status: pending build/visual QA confirmation.
+Status: build passed in StackBlitz and visual QA confirmed.

@@ -6,6 +6,7 @@ import { CallDetailsPage } from './pages/CallDetailsPage'
 import { NewCallPage } from './pages/NewCallPage'
 import { KaddishRequestsList } from './pages/KaddishRequestsList'
 import { KaddishRequestDetailsPage } from './pages/KaddishRequestDetailsPage'
+import { NewKaddishRequestPage } from './pages/NewKaddishRequestPage'
 import { VolunteersList } from './pages/VolunteersList'
 import { VolunteerDetailsPage } from './pages/VolunteerDetailsPage'
 import { MembersList } from './pages/MembersList'
@@ -19,6 +20,10 @@ function KaddishRequestsPage() {
 
 function KaddishRequestDetailsPageRoute() {
   return <PageShell><KaddishRequestDetailsPage /></PageShell>
+}
+
+function NewKaddishRequestPageRoute() {
+  return <PageShell><NewKaddishRequestPage /></PageShell>
 }
 
 function VolunteersPage() {
@@ -54,5 +59,23 @@ function NewCallPageRoute() {
 }
 
 export default function App() {
-  return <BrowserRouter><Routes><Route path="/" element={<Dashboard />} /><Route path="/calls" element={<CallsList />} /><Route path="/calls/new" element={<NewCallPageRoute />} /><Route path="/calls/:callId" element={<CallDetailsPageRoute />} /><Route path="/kaddish-requests" element={<KaddishRequestsPage />} /><Route path="/kaddish-requests/:requestId" element={<KaddishRequestDetailsPageRoute />} /><Route path="/volunteers" element={<VolunteersPage />} /><Route path="/volunteers/:volunteerId" element={<VolunteerDetailsPageRoute />} /><Route path="/members" element={<MembersPage />} /><Route path="/members/:memberId" element={<MemberDetailsPageRoute />} /><Route path="/reports" element={<ReportsPageRoute />} /><Route path="/settings" element={<SettingsPageRoute />} /></Routes></BrowserRouter>
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/calls" element={<CallsList />} />
+        <Route path="/calls/new" element={<NewCallPageRoute />} />
+        <Route path="/calls/:callId" element={<CallDetailsPageRoute />} />
+        <Route path="/kaddish-requests" element={<KaddishRequestsPage />} />
+        <Route path="/kaddish-requests/new" element={<NewKaddishRequestPageRoute />} />
+        <Route path="/kaddish-requests/:requestId" element={<KaddishRequestDetailsPageRoute />} />
+        <Route path="/volunteers" element={<VolunteersPage />} />
+        <Route path="/volunteers/:volunteerId" element={<VolunteerDetailsPageRoute />} />
+        <Route path="/members" element={<MembersPage />} />
+        <Route path="/members/:memberId" element={<MemberDetailsPageRoute />} />
+        <Route path="/reports" element={<ReportsPageRoute />} />
+        <Route path="/settings" element={<SettingsPageRoute />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -36,7 +37,7 @@ const callsColumns: Column<CallsRow>[] = [
   { key: 'status', label: 'סטטוס', render: row => <Badge tone={row.status === 'הושלמה' ? 'success' : row.status === 'בטיפול' ? 'warning' : 'neutral'}>{row.status}</Badge> },
   { key: 'urgency', label: 'דחיפות', render: row => <Badge tone={row.urgency === 'גבוהה' ? 'danger' : row.urgency === 'רגילה' ? 'warning' : 'success'}>{row.urgency}</Badge> },
   { key: 'updated', label: 'עדכון אחרון' },
-  { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
+  { key: 'actions', label: 'פעולות', render: row => <Link className="table-action" to={`/calls/${row.callId}`}>צפייה</Link> }
 ]
 
 const callsStats = [

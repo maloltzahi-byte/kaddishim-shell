@@ -16,4 +16,14 @@
 .calls-activity-summary span { text-align: center; border-left: 1px solid var(--color-border-light); }
 .calls-activity-summary span:last-child { border-left: 0; }
 .calls-activity-summary b { color: var(--color-navy-text); }
-@media (max-width: 900px) { .calls-stats, .calls-activity-summary div { grid-template-columns: 1fr; } }
+.reports-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
+.report-panel { border: 1px solid var(--color-border-soft); border-radius: 9px; background: #fff; padding: 14px 16px; min-height: 176px; }
+.report-panel h2 { margin: 0 0 12px; padding-bottom: 9px; border-bottom: 1px solid var(--color-border-light); text-align: center; font-size: 14px; font-weight: 800; color: var(--color-navy-text); }
+.report-metric-list { display: grid; gap: 10px; }
+.report-metric-row { display: flex; align-items: center; justify-content: space-between; min-height: 26px; color: var(--color-muted); font-size: 12.5px; }
+.report-metric-row strong { color: var(--color-navy-text); font-size: 15px; }
+.report-alerts { margin: 0; padding: 0 18px 0 0; color: var(--color-muted); font-size: 12.5px; line-height: 2; }
+.report-alerts li::marker { color: var(--color-gold); }
+.reports-table-section { margin-top: 14px; }
+.reports-table-section h2 { margin: 0 0 10px; text-align: right; font-size: 15px; font-weight: 800; color: var(--color-navy-text); }
+@media (max-width: 900px) { .calls-stats, .calls-activity-summary div, .reports-grid { grid-template-columns: 1fr; } }

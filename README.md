@@ -191,3 +191,15 @@ Files:
 - README.md
 - docs/11-supabase-readonly-strategy.md
 Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
+
+Sprint 27: Detail Read Integration Batch — Implemented, pending Architect QA
+Scope: connected `/calls/:callId`, `/kaddish-requests/:requestId`, `/volunteers/:volunteerId` and `/members/:memberId` detail screens only to their matching `supabaseReadAdapter` read-only find methods with mock detail data as the initial render and full fallback if Supabase is not configured, fails, returns no row or returns invalid data. Related panels remain static/mock by design. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
+Files:
+- src/pages/CallDetailsPage.tsx
+- src/pages/KaddishRequestDetailsPage.tsx
+- src/pages/VolunteerDetailsPage.tsx
+- src/pages/MemberDetailsPage.tsx
+- src/lib/supabaseReadAdapter.ts
+- README.md
+- docs/11-supabase-readonly-strategy.md
+Status: pending build/visual QA confirmation.

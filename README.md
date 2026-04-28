@@ -65,6 +65,11 @@ Approval Date: 28/04/2026
 Approved By: Architect QA
 Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
-Sprint 7: Structural Refactor — QA Pending
+Sprint 7: Structural Refactor — Passed
 Scope: App.tsx cleanup, layout extraction, Dashboard extraction, Calls extraction.
+Status: approved by Architect QA.
+
+Sprint 8: Call Details Screen — QA Pending
+Route: /calls/:callId
+Test Route: /calls/M-2025-0548
 Status: live in StackBlitz, pending Architect QA.

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -52,7 +53,7 @@ const columns: Column<MemberRow>[] = [
   { key: 'membershipType', label: 'סוג חברות', render: row => <Badge tone={membershipTone(String(row.membershipType))}>{row.membershipType}</Badge> },
   { key: 'status', label: 'סטטוס', render: row => <Badge tone={statusTone(String(row.status))}>{row.status}</Badge> },
   { key: 'updated', label: 'עדכון אחרון' },
-  { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
+  { key: 'actions', label: 'פעולות', render: row => <Link className="table-action" to={`/members/${row.memberId}`}>צפייה</Link> }
 ]
 
 function MembersStats() {

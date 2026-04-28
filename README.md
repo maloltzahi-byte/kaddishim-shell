@@ -85,3 +85,12 @@ Sprint 16: New Member Screen — QA Pending
 Route: /members/new
 Scope: static visual shell for creating a new member.
 Status: live in StackBlitz, pending Architect QA.
+
+Sprint 17: Creation Flows QA — QA Pending
+Scope: verified navigation from list screens to creation screens, verified route order, verified return-link targets by code inspection, and marked live QA for Architect confirmation.
+Routes checked:
+- /calls -> /calls/new
+- /kaddish-requests -> /kaddish-requests/new
+- /volunteers -> /volunteers/new
+- /members -> /members/new
+Status: pending Architect QA and live build confirmation in StackBlitz.

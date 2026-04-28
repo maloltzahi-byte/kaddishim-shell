@@ -97,3 +97,8 @@ Sprint 13: New Call Screen — QA Pending
 Route: /calls/new
 Scope: static visual shell for creating a new minyan call.
 Status: live in StackBlitz, pending Architect QA.
+
+Sprint 14: New Kaddish Request Screen — QA Pending
+Route: /kaddish-requests/new
+Scope: static visual shell for creating a new kaddish request.
+Status: live in StackBlitz, pending Architect QA.

@@ -26,4 +26,8 @@
 .report-alerts li::marker { color: var(--color-gold); }
 .reports-table-section { margin-top: 14px; }
 .reports-table-section h2 { margin: 0 0 10px; text-align: right; font-size: 15px; font-weight: 800; color: var(--color-navy-text); }
+.settings-panel { display: flex; flex-direction: column; }
+.settings-panel .report-metric-list { flex: 1; }
+.settings-panel-action { margin-top: 12px; text-align: left; }
+.settings-panel-action .btn { min-width: 118px; padding: 0 14px; }
 @media (max-width: 900px) { .calls-stats, .calls-activity-summary div, .reports-grid { grid-template-columns: 1fr; } }

@@ -25,73 +25,46 @@ https://stackblitz.com/github/maloltzahi-byte/kaddishim-shell
 ## Sprint status
 
 Dashboard: Visual Locked — V1.0.0
-Approval Date: 28/04/2026
-Approved By: Architect QA Overlay
-Cosmetic Punch List: 4 items deferred to Final Polish sprint
 
 Sprint 1: Calls List Screen — Passed
 Route: /calls
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 2: Kaddish Requests Screen — Passed
 Route: /kaddish-requests
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 3: Volunteers Screen — Passed
 Route: /volunteers
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 4: Members Screen — Passed
 Route: /members
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 5: Reports Screen — Passed
 Route: /reports
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 6: Settings Screen — Passed
 Route: /settings
-Approval Date: 28/04/2026
-Approved By: Architect QA
-Status: functional visual screen approved; cosmetic refinements deferred to Final Polish.
 
 Sprint 7: Structural Refactor — Passed
 Scope: App.tsx cleanup, layout extraction, Dashboard extraction, Calls extraction.
-Status: approved by Architect QA.
 
 Sprint 8: Call Details Screen — Passed
 Route: /calls/:callId
 Test Route: /calls/M-2025-0548
-Status: approved by Architect QA.
 
 Sprint 9: Kaddish Request Details Screen — Passed
 Route: /kaddish-requests/:requestId
 Test Route: /kaddish-requests/K-2025-0321
-Status: approved by Architect QA.
 
 Sprint 10: Volunteer Details Screen — Passed
 Route: /volunteers/:volunteerId
 Test Route: /volunteers/V-2025-0142
-Status: approved by Architect QA.
 
 Sprint 11: Member Details Screen — Passed
 Route: /members/:memberId
 Test Route: /members/C-2025-1284
-Status: approved by Architect QA.
 
 Sprint 12: List-to-Details Navigation — Passed
 Scope: connect primary list view buttons to details routes.
-Status: confirmed by owner; pending final Architect record only.
 
 Sprint 13: New Call Screen — QA Pending
 Route: /calls/new
@@ -101,4 +74,14 @@ Status: live in StackBlitz, pending Architect QA.
 Sprint 14: New Kaddish Request Screen — QA Pending
 Route: /kaddish-requests/new
 Scope: static visual shell for creating a new kaddish request.
+Status: live in StackBlitz, pending Architect QA.
+
+Sprint 15: New Volunteer Screen — QA Pending
+Route: /volunteers/new
+Scope: static visual shell for creating a new volunteer.
+Status: live in StackBlitz, pending Architect QA.
+
+Sprint 16: New Member Screen — QA Pending
+Route: /members/new
+Scope: static visual shell for creating a new member.
 Status: live in StackBlitz, pending Architect QA.

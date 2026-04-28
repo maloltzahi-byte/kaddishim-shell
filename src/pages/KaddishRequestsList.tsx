@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -54,7 +55,7 @@ const columns: Column<KaddishRequestRow>[] = [
   { key: 'status', label: 'סטטוס', render: row => <Badge tone={statusTone(String(row.status))}>{row.status}</Badge> },
   { key: 'urgency', label: 'דחיפות', render: row => <Badge tone={urgencyTone(String(row.urgency))}>{row.urgency}</Badge> },
   { key: 'updated', label: 'עדכון אחרון' },
-  { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
+  { key: 'actions', label: 'פעולות', render: row => <Link className="table-action" to={`/kaddish-requests/${row.requestId}`}>צפייה</Link> }
 ]
 
 function RequestsStats() {

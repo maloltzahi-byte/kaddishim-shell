@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../components/primitives/Button'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
@@ -63,7 +62,7 @@ function RequestsStats() {
 }
 
 function RequestsFilterBar() {
-  return <div className="filter-bar"><Button>יצירת בקשת קדיש</Button><SelectField value="סוג בקשה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם נפטר או מבקש" /></div>
+  return <div className="filter-bar"><Link className="btn btn-primary" to="/kaddish-requests/new">יצירת בקשת קדיש</Link><SelectField value="סוג בקשה" /><SelectField value="עיר" /><SelectField value="סטטוס" /><SearchInput placeholder="חיפוש לפי שם נפטר או מבקש" /></div>
 }
 
 function RequestsActivitySummary() {

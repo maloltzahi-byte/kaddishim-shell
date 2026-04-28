@@ -15,6 +15,13 @@ import { MemberDetailsPage } from './pages/MemberDetailsPage'
 import { NewMemberPage } from './pages/NewMemberPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
+import { PublicHomePage } from './pages/public/PublicHomePage'
+import { PublicKaddishRequestPage } from './pages/public/PublicKaddishRequestPage'
+import { PublicMinyanRequestPage } from './pages/public/PublicMinyanRequestPage'
+import { PublicVolunteerJoinPage } from './pages/public/PublicVolunteerJoinPage'
+import { PublicDonationsPage } from './pages/public/PublicDonationsPage'
+import { PublicThankYouPage } from './pages/public/PublicThankYouPage'
+import { PublicStatusPage } from './pages/public/PublicStatusPage'
 
 const shell = (page: React.ReactNode) => <PageShell>{page}</PageShell>
 
@@ -23,6 +30,13 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/public" element={<PublicHomePage />} />
+        <Route path="/public/kaddish-request" element={<PublicKaddishRequestPage />} />
+        <Route path="/public/minyan-request" element={<PublicMinyanRequestPage />} />
+        <Route path="/public/volunteer-join" element={<PublicVolunteerJoinPage />} />
+        <Route path="/public/donations" element={<PublicDonationsPage />} />
+        <Route path="/public/thank-you" element={<PublicThankYouPage />} />
+        <Route path="/public/status" element={<PublicStatusPage />} />
         <Route path="/calls" element={<CallsList />} />
         <Route path="/calls/new" element={shell(<NewCallPage />)} />
         <Route path="/calls/:callId" element={shell(<CallDetailsPage />)} />

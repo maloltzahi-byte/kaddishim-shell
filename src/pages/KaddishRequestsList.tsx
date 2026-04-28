@@ -4,33 +4,10 @@ import { SelectField } from '../components/primitives/SelectField'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
+import { kaddishRequestStats, kaddishRequestsData } from '../data/kaddishRequests'
+import type { KaddishRequestRecord } from '../types/entities'
 
-type KaddishRequestRow = Record<string, React.ReactNode> & {
-  requestId: string
-  deceasedName: string
-  city: string
-  requestType: string
-  date: string
-  volunteer: string
-  status: string
-  urgency: string
-  updated: string
-}
-
-const requestsStats = [
-  { label: 'בקשות פתוחות', value: '56' },
-  { label: 'ממתינות לשיבוץ', value: '14' },
-  { label: 'שובצו היום', value: '22' },
-  { label: 'דחופות', value: '6' }
-]
-
-const requestsData: KaddishRequestRow[] = [
-  { requestId: 'K-2025-0321', deceasedName: 'יעקב בן משה', city: 'ירושלים', requestType: 'יומי', date: '28/04/2026', volunteer: 'הוקצה', status: 'פעילה', urgency: 'רגילה', updated: 'לפני 7 דק׳' },
-  { requestId: 'K-2025-0320', deceasedName: 'מרים בת שרה', city: 'בני ברק', requestType: 'יארצייט', date: '28/04/2026', volunteer: 'טרם הוקצה', status: 'ממתינה', urgency: 'גבוהה', updated: 'לפני 15 דק׳' },
-  { requestId: 'K-2025-0319', deceasedName: 'דוד בן רחל', city: 'פתח תקוה', requestType: 'חד פעמי', date: '29/04/2026', volunteer: 'הוקצה', status: 'פעילה', urgency: 'רגילה', updated: 'לפני 22 דק׳' },
-  { requestId: 'K-2025-0318', deceasedName: 'אסתר בת לאה', city: 'אלעד', requestType: 'יומי', date: '30/04/2026', volunteer: 'טרם הוקצה', status: 'ממתינה', urgency: 'גבוהה', updated: 'לפני 35 דק׳' },
-  { requestId: 'K-2025-0317', deceasedName: 'חיים בן יוסף', city: 'בית שמש', requestType: 'יארצייט', date: '01/05/2026', volunteer: 'הושלם', status: 'הושלמה', urgency: 'נמוכה', updated: 'לפני שעה' }
-]
+type KaddishRequestRow = Record<string, React.ReactNode> & KaddishRequestRecord
 
 function statusTone(status: string): BadgeTone {
   if (status === 'הושלמה') return 'success'
@@ -58,7 +35,7 @@ const columns: Column<KaddishRequestRow>[] = [
 ]
 
 function RequestsStats() {
-  return <div className="calls-stats">{requestsStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+  return <div className="calls-stats">{kaddishRequestStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function RequestsFilterBar() {
@@ -70,5 +47,5 @@ function RequestsActivitySummary() {
 }
 
 export function KaddishRequestsList() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>בקשות קדיש</h1><p>רשימת בקשות הקדיש והמעקב אחר שיבוץ מתנדבים</p></div><section className="calls-panel"><RequestsStats /><RequestsFilterBar /><DataTable columns={columns} rows={requestsData} /><Pagination total={56} /><RequestsActivitySummary /></section></div>
+  return <div className="content calls-content"><div className="title calls-title"><h1>בקשות קדיש</h1><p>רשימת בקשות הקדיש והמעקב אחר שיבוץ מתנדבים</p></div><section className="calls-panel"><RequestsStats /><RequestsFilterBar /><DataTable columns={columns} rows={kaddishRequestsData as KaddishRequestRow[]} /><Pagination total={56} /><RequestsActivitySummary /></section></div>
 }

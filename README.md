@@ -181,3 +181,12 @@ Files:
 - README.md
 - docs/11-supabase-readonly-strategy.md
 Status: build passed in StackBlitz and visual QA confirmed.
+
+Sprint 26: Read Integration Expansion — Implemented, pending Architect QA
+Scope: connected `/kaddish-requests`, `/volunteers` and `/members` list screens only to their matching `supabaseReadAdapter` read-only list methods with mock data as the initial render and full fallback if Supabase is not configured, fails, or returns empty data. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
+Files:
+- src/pages/KaddishRequestsList.tsx
+- src/pages/VolunteersList.tsx
+- src/pages/MembersList.tsx
+- README.md
+Status: pending build/visual QA confirmation.

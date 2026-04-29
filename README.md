@@ -204,11 +204,20 @@ Files:
 - docs/11-supabase-readonly-strategy.md
 Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
 
-Sprint 28: Reports + Public Status Read Integration — Implemented, pending Architect QA
+Sprint 28: Reports + Public Status Read Integration — Passed
 Scope: connected `/reports` and `/public/status` to read-only Supabase-backed data paths with full mock fallback. Reports compute safe app-side aggregations from existing entities only; missing/related report sections remain mock/static by design. Public status reads the existing sample request status through the approved read-only adapter path and keeps the existing read-only public form behavior. No UI, CSS, route, schema, seed, Auth, CRUD, submit or write-operation changes.
 Files:
 - src/pages/ReportsPage.tsx
 - src/pages/public/PublicStatusPage.tsx
 - README.md
 - docs/11-supabase-readonly-strategy.md
-Status: pending build/visual QA confirmation.
+Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
+
+Sprint 29: Write Contract + Validation Plan — Implemented, pending Architect QA
+Scope: added write contract documentation, future payload types, write result/error types and disabled `supabaseWriteAdapter` scaffold. No real insert, update, delete, submit, Auth, CRUD, RLS, schema, seed, UI, CSS, route or page behavior changes.
+Files:
+- docs/12-write-contract.md
+- src/types/entities.ts
+- src/lib/supabaseWriteAdapter.ts
+- README.md
+Status: pending build/QA confirmation.

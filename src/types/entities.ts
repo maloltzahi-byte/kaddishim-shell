@@ -146,3 +146,74 @@ export type PublicFormDefinition = {
   title: string
   fields: PublicField[]
 }
+
+export type CreateCallPayload = {
+  city: string
+  time: string
+  required: string
+  urgency: UrgencyLevel
+  location?: string
+  contact?: string
+}
+
+export type CreateKaddishRequestPayload = {
+  deceasedName: string
+  city: string
+  requestType: RequestType
+  date: string
+  requesterName?: string
+  requesterPhone?: string
+}
+
+export type CreateVolunteerPayload = {
+  fullName: string
+  city: string
+  phone: string
+  availability: AvailabilityStatus
+}
+
+export type CreateMemberPayload = {
+  fullName: string
+  city: string
+  phone: string
+  email: string
+  membershipType: MembershipType
+}
+
+export type PublicKaddishRequestPayload = CreateKaddishRequestPayload & {
+  source: 'public-kaddish-request'
+}
+
+export type PublicMinyanRequestPayload = CreateCallPayload & {
+  source: 'public-minyan-request'
+}
+
+export type PublicVolunteerJoinPayload = CreateVolunteerPayload & {
+  source: 'public-volunteer-join'
+}
+
+export type DonationInterestPayload = {
+  fullName: string
+  phone: string
+  email?: string
+  interestType: 'donation' | 'partner'
+  note?: string
+}
+
+export type WriteFailureCode =
+  | 'VALIDATION_ERROR'
+  | 'DUPLICATE_SUSPECTED'
+  | 'NETWORK_ERROR'
+  | 'SUPABASE_NOT_CONFIGURED'
+  | 'FORBIDDEN_OPERATION'
+  | 'UNKNOWN_ERROR'
+
+export type WriteFailure = {
+  code: WriteFailureCode
+  message: string
+  field?: string
+}
+
+export type WriteResult<T> =
+  | { ok: true; data: T }
+  | { ok: false; errors: WriteFailure[] }

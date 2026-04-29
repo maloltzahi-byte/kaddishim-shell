@@ -12,11 +12,11 @@ export function LoginPage() {
         <div className="public-form-grid public-form-grid-two">
           <label className="public-field">
             <span>אימייל</span>
-            <input placeholder="name@example.com" readOnly />
+            <input placeholder="name@example.com" />
           </label>
           <label className="public-field">
             <span>סיסמה</span>
-            <input placeholder="••••••••" type="password" readOnly />
+            <input placeholder="••••••••" type="password" />
           </label>
         </div>
         <div className="public-actions public-actions-end">

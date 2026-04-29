@@ -58,7 +58,7 @@ export default function App() {
         <Route path="/volunteers" element={shell(<VolunteersList />)} />
         <Route path="/volunteers/new" element={shell(<NewVolunteerPage />)} />
         <Route path="/volunteers/:volunteerId" element={shell(<VolunteerDetailsPage />)} />
-        <Route path="/members" element={shell(<MembersList />} />
+        <Route path="/members" element={shell(<MembersList />)} />
         <Route path="/members/new" element={shell(<NewMemberPage />)} />
         <Route path="/members/:memberId" element={shell(<MemberDetailsPage />)} />
         <Route path="/reports" element={shell(<ReportsPage />)} />

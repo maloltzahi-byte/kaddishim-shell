@@ -4,6 +4,7 @@ import App from './App'
 import './index.css'
 import './calls-patch.css'
 import './public.css'
+import './public-home.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

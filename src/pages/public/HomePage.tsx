@@ -67,7 +67,7 @@ export function HomePage() {
           <Link to="/partners">שותפים</Link>
           <Link to="/status">איתור בקשה</Link>
         </nav>
-        <Link to="/admin" className="home-login">
+        <Link to="/login" className="home-login">
           כניסה
         </Link>
       </header>

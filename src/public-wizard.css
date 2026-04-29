@@ -40,7 +40,8 @@
 .donation-amounts strong { font-size: 24px; font-weight: 900; }
 .donation-amounts span { color: var(--color-muted); font-size: 12px; font-weight: 800; }
 .donation-impact h2, .donation-form-section h2, .partners-form h2, .partners-reasons h2 { margin: 0 0 14px; color: var(--color-navy-text); font-size: 20px; font-weight: 900; text-align: center; }
-.donation-impact > div, .partners-reasons > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.donation-impact > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.partners-reasons > div { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .donation-impact article, .partners-reasons article { border: 1px solid var(--color-border-soft); border-radius: 10px; background: #fffaf2; padding: 18px; text-align: center; }
 .donation-impact h3, .partners-reasons h3 { margin: 0 0 8px; color: var(--color-navy-text); font-size: 16px; font-weight: 900; }
 .donation-impact p, .partners-reasons p { margin: 0; color: var(--color-muted); font-size: 13px; line-height: 1.7; }
@@ -50,4 +51,4 @@
 .partner-type-card { text-align: center; }
 .partners-form { max-width: 980px; display: grid; gap: 16px; }
 .partners-reasons { max-width: 980px; margin: 20px auto 0; padding: 24px; border: 1px solid var(--color-border-soft); border-radius: 15px; background: #fff; }
-@media (max-width: 760px) { .public-wizard-card { padding: 26px 18px 22px; } .public-stepper { gap: 6px; } .public-stepper::before { right: 20%; left: 20%; } .public-review-grid { grid-template-columns: 1fr; } .public-review-grid span { border-bottom: 0; padding-bottom: 4px; } .public-review-grid strong { padding-top: 4px; } .public-wizard-actions { flex-direction: column-reverse; } .public-choice-row, .public-checkbox-group, .public-radio-group, .donation-amounts, .donation-impact > div, .partners-reasons > div { grid-template-columns: 1fr; } .partners-reasons { padding: 20px; } }
+@media (max-width: 760px) { .public-wizard-card { padding: 26px 18px 22px; } .public-stepper { gap: 6px; } .public-stepper::before { right: 20%; left: 20%; } .public-review-grid { grid-template-columns: 1fr; } .public-review-grid span { border-bottom: 0; padding-bottom: 4px; } .public-review-grid strong { padding-top: 4px; } .public-wizard-actions { flex-direction: column-reverse; } .public-choice-row, .public-checkbox-group, .public-radio-group, .donation-impact > div, .partners-reasons > div { grid-template-columns: 1fr; } .donation-amounts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .donation-amounts button { min-height: 82px; } .donation-amounts strong { font-size: 20px; } .partners-reasons { padding: 20px; } }

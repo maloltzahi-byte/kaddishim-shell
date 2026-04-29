@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
 
 type ReportRow = Record<string, React.ReactNode> & {
   date: string
@@ -9,6 +11,13 @@ type ReportRow = Record<string, React.ReactNode> & {
   volunteers: string
   members: string
   status: string
+}
+
+type ReportSummary = {
+  reportStats: Array<{ label: string; value: string }>
+  activityByType: Array<{ label: string; value: string }>
+  treatmentStatus: Array<{ label: string; value: string }>
+  managementAlerts: string[]
 }
 
 const reportStats = [
@@ -39,6 +48,13 @@ const managementAlerts = [
   '12 חברים דורשים אימות'
 ]
 
+const fallbackSummary: ReportSummary = {
+  reportStats,
+  activityByType,
+  treatmentStatus,
+  managementAlerts
+}
+
 const dailyReportData: ReportRow[] = [
   { date: '28/04/2026', calls: '34', requests: '22', volunteers: '87', members: '38', status: 'תקין' },
   { date: '27/04/2026', calls: '29', requests: '18', volunteers: '74', members: '31', status: 'תקין' },
@@ -53,6 +69,47 @@ function statusTone(status: string): BadgeTone {
   return 'neutral'
 }
 
+function buildReportSummary(
+  callsCount: number,
+  completedCalls: number,
+  requestsCount: number,
+  assignedRequests: number,
+  volunteersCount: number,
+  activeVolunteers: number,
+  membersCount: number,
+  activeMembers: number
+): ReportSummary {
+  const openItems = callsCount - completedCalls + requestsCount - assignedRequests
+  const totalActivity = callsCount + requestsCount + volunteersCount + membersCount
+
+  return {
+    reportStats: [
+      { label: 'פעילות כוללת', value: String(totalActivity) },
+      { label: 'קריאות שהושלמו', value: String(completedCalls) },
+      { label: 'בקשות ששובצו', value: String(assignedRequests) },
+      { label: 'זמן תגובה ממוצע', value: '5.6 ש׳' }
+    ],
+    activityByType: [
+      { label: 'קריאות מניין', value: String(callsCount) },
+      { label: 'בקשות קדיש', value: String(requestsCount) },
+      { label: 'מתנדבים פעילים', value: String(activeVolunteers) },
+      { label: 'חברים פעילים', value: String(activeMembers) }
+    ],
+    treatmentStatus: [
+      { label: 'פתוחות', value: String(openItems) },
+      { label: 'בטיפול', value: String(callsCount - completedCalls) },
+      { label: 'הושלמו', value: String(completedCalls + assignedRequests) },
+      { label: 'דורשות בדיקה', value: String(volunteersCount - activeVolunteers + membersCount - activeMembers) }
+    ],
+    managementAlerts: [
+      `${Math.max(callsCount - completedCalls, 0)} קריאות ללא מתנדב`,
+      `${Math.max(requestsCount - assignedRequests, 0)} בקשות קדיש ממתינות לשיבוץ`,
+      `${Math.max(volunteersCount - activeVolunteers, 0)} מתנדבים דורשים טיפול`,
+      `${Math.max(membersCount - activeMembers, 0)} חברים דורשים אימות`
+    ]
+  }
+}
+
 const columns: Column<ReportRow>[] = [
   { key: 'date', label: 'תאריך' },
   { key: 'calls', label: 'קריאות מניין' },
@@ -63,8 +120,8 @@ const columns: Column<ReportRow>[] = [
   { key: 'actions', label: 'פעולות', render: () => <button className="table-action">צפייה</button> }
 ]
 
-function ReportsStats() {
-  return <div className="calls-stats">{reportStats.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
+function ReportsStats({ rows }: { rows: Array<{ label: string; value: string }> }) {
+  return <div className="calls-stats">{rows.map(item => <article className="calls-stat" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>)}</div>
 }
 
 function ReportPanel({ title, children }: { title: string; children: React.ReactNode }) {
@@ -75,10 +132,48 @@ function MetricList({ rows }: { rows: Array<{ label: string; value: string }> })
   return <div className="report-metric-list">{rows.map(row => <div className="report-metric-row" key={row.label}><span>{row.label}</span><strong>{row.value}</strong></div>)}</div>
 }
 
-function AlertsList() {
-  return <ul className="report-alerts">{managementAlerts.map(alert => <li key={alert}>{alert}</li>)}</ul>
+function AlertsList({ rows }: { rows: string[] }) {
+  return <ul className="report-alerts">{rows.map(alert => <li key={alert}>{alert}</li>)}</ul>
 }
 
 export function ReportsPage() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>דוחות</h1><p>סקירת פעילות, ביצועים ומדדי שירות במערכת</p></div><section className="calls-panel"><ReportsStats /><div className="reports-grid"><ReportPanel title="פעילות לפי סוג"><MetricList rows={activityByType} /></ReportPanel><ReportPanel title="סטטוס טיפול"><MetricList rows={treatmentStatus} /></ReportPanel><ReportPanel title="התראות ניהוליות"><AlertsList /></ReportPanel></div><section className="reports-table-section"><h2>דוח פעילות יומי</h2><DataTable columns={columns} rows={dailyReportData} /><Pagination total={5} /></section></section></div>
+  const [summary, setSummary] = useState<ReportSummary>(fallbackSummary)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadReportsSummary() {
+      try {
+        const [calls, requests, volunteers, members] = await Promise.all([
+          supabaseReadAdapter.calls.list(),
+          supabaseReadAdapter.kaddishRequests.list(),
+          supabaseReadAdapter.volunteers.list(),
+          supabaseReadAdapter.members.list()
+        ])
+
+        const nextSummary = buildReportSummary(
+          calls.length,
+          calls.filter(item => item.status === 'הושלמה').length,
+          requests.length,
+          requests.filter(item => item.status === 'הושלמה' || item.volunteer !== 'טרם הוקצה').length,
+          volunteers.length,
+          volunteers.filter(item => item.status === 'פעיל').length,
+          members.length,
+          members.filter(item => item.status === 'פעיל').length
+        )
+
+        if (isMounted) setSummary(nextSummary)
+      } catch {
+        if (isMounted) setSummary(fallbackSummary)
+      }
+    }
+
+    void loadReportsSummary()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return <div className="content calls-content"><div className="title calls-title"><h1>דוחות</h1><p>סקירת פעילות, ביצועים ומדדי שירות במערכת</p></div><section className="calls-panel"><ReportsStats rows={summary.reportStats} /><div className="reports-grid"><ReportPanel title="פעילות לפי סוג"><MetricList rows={summary.activityByType} /></ReportPanel><ReportPanel title="סטטוס טיפול"><MetricList rows={summary.treatmentStatus} /></ReportPanel><ReportPanel title="התראות ניהוליות"><AlertsList rows={summary.managementAlerts} /></ReportPanel></div><section className="reports-table-section"><h2>דוח פעילות יומי</h2><DataTable columns={columns} rows={dailyReportData} /><Pagination total={5} /></section></section></div>
 }

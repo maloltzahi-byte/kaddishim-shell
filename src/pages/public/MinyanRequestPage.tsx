@@ -110,7 +110,7 @@ export function MinyanRequestPage() {
 
         {currentStep === 3 && (
           <section className="public-wizard-panel public-review-panel" aria-label="אישור הבקשה">
-            <h2>בדיקה אחרונה לפני שליחה</h2>
+            <h2>אישור פרטים לפני שליחה</h2>
             <p>הבקשה תישלח למוקד הדמו ותוצג הודעת אישור בלבד. אין שמירה אמיתית ואין חיבור לשרת.</p>
             <div className="public-review-grid">
               <span>סוג אירוע</span>

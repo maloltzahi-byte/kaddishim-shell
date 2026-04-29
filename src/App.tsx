@@ -17,10 +17,10 @@ import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { HomePage } from './pages/public/HomePage'
 import { LoginPage } from './pages/public/LoginPage'
+import { MinyanRequestPage } from './pages/public/MinyanRequestPage'
 import { PartnersPage } from './pages/public/PartnersPage'
 import { PublicHomePage } from './pages/public/PublicHomePage'
 import { PublicKaddishRequestPage } from './pages/public/PublicKaddishRequestPage'
-import { PublicMinyanRequestPage } from './pages/public/PublicMinyanRequestPage'
 import { PublicVolunteerJoinPage } from './pages/public/PublicVolunteerJoinPage'
 import { PublicDonationsPage } from './pages/public/PublicDonationsPage'
 import { PublicThankYouPage } from './pages/public/PublicThankYouPage'
@@ -36,7 +36,7 @@ export default function App() {
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/kaddish" element={<PublicKaddishRequestPage />} />
-        <Route path="/minyan" element={<PublicMinyanRequestPage />} />
+        <Route path="/minyan" element={<MinyanRequestPage />} />
         <Route path="/volunteer" element={<PublicVolunteerJoinPage />} />
         <Route path="/donate" element={<PublicDonationsPage />} />
         <Route path="/partners" element={<PartnersPage />} />
@@ -44,7 +44,7 @@ export default function App() {
         <Route path="/thank-you" element={<PublicThankYouPage />} />
         <Route path="/public" element={<PublicHomePage />} />
         <Route path="/public/kaddish-request" element={<PublicKaddishRequestPage />} />
-        <Route path="/public/minyan-request" element={<PublicMinyanRequestPage />} />
+        <Route path="/public/minyan-request" element={<MinyanRequestPage />} />
         <Route path="/public/volunteer-join" element={<PublicVolunteerJoinPage />} />
         <Route path="/public/donations" element={<PublicDonationsPage />} />
         <Route path="/public/thank-you" element={<PublicThankYouPage />} />
@@ -58,7 +58,7 @@ export default function App() {
         <Route path="/volunteers" element={shell(<VolunteersList />)} />
         <Route path="/volunteers/new" element={shell(<NewVolunteerPage />)} />
         <Route path="/volunteers/:volunteerId" element={shell(<VolunteerDetailsPage />)} />
-        <Route path="/members" element={shell(<MembersList />)} />
+        <Route path="/members" element={shell(<MembersList />} />
         <Route path="/members/new" element={shell(<NewMemberPage />)} />
         <Route path="/members/:memberId" element={shell(<MemberDetailsPage />)} />
         <Route path="/reports" element={shell(<ReportsPage />)} />

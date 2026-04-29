@@ -16,6 +16,8 @@ import { NewMemberPage } from './pages/NewMemberPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { HomePage } from './pages/public/HomePage'
+import { LoginPage } from './pages/public/LoginPage'
+import { PartnersPage } from './pages/public/PartnersPage'
 import { PublicHomePage } from './pages/public/PublicHomePage'
 import { PublicKaddishRequestPage } from './pages/public/PublicKaddishRequestPage'
 import { PublicMinyanRequestPage } from './pages/public/PublicMinyanRequestPage'
@@ -32,6 +34,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<Dashboard />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/kaddish" element={<PublicKaddishRequestPage />} />
+        <Route path="/minyan" element={<PublicMinyanRequestPage />} />
+        <Route path="/volunteer" element={<PublicVolunteerJoinPage />} />
+        <Route path="/donate" element={<PublicDonationsPage />} />
+        <Route path="/partners" element={<PartnersPage />} />
+        <Route path="/status" element={<PublicStatusPage />} />
+        <Route path="/thank-you" element={<PublicThankYouPage />} />
         <Route path="/public" element={<PublicHomePage />} />
         <Route path="/public/kaddish-request" element={<PublicKaddishRequestPage />} />
         <Route path="/public/minyan-request" element={<PublicMinyanRequestPage />} />

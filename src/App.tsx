@@ -15,6 +15,7 @@ import { MemberDetailsPage } from './pages/MemberDetailsPage'
 import { NewMemberPage } from './pages/NewMemberPage'
 import { ReportsPage } from './pages/ReportsPage'
 import { SettingsPage } from './pages/SettingsPage'
+import { HomePage } from './pages/public/HomePage'
 import { PublicHomePage } from './pages/public/PublicHomePage'
 import { PublicKaddishRequestPage } from './pages/public/PublicKaddishRequestPage'
 import { PublicMinyanRequestPage } from './pages/public/PublicMinyanRequestPage'
@@ -29,7 +30,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<Dashboard />} />
         <Route path="/public" element={<PublicHomePage />} />
         <Route path="/public/kaddish-request" element={<PublicKaddishRequestPage />} />
         <Route path="/public/minyan-request" element={<PublicMinyanRequestPage />} />

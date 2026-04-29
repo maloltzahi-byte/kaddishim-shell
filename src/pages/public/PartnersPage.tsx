@@ -32,19 +32,19 @@ export function PartnersPage() {
         <div className="public-form-grid">
           <label className="public-field">
             <span>שם הארגון</span>
-            <input placeholder="שם הארגון" readOnly />
+            <input placeholder="שם הארגון" />
           </label>
           <label className="public-field">
             <span>איש קשר</span>
-            <input placeholder="שם מלא" readOnly />
+            <input placeholder="שם מלא" />
           </label>
           <label className="public-field">
             <span>טלפון</span>
-            <input placeholder="050-1234567" readOnly />
+            <input placeholder="050-1234567" />
           </label>
           <label className="public-field">
             <span>אימייל</span>
-            <input placeholder="contact@example.org" readOnly />
+            <input placeholder="contact@example.org" />
           </label>
         </div>
         <div className="public-actions public-actions-end">

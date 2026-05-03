@@ -1,17 +1,20 @@
 # Supabase Read-Only Strategy — Kaddishim Shell
 
-## 1. Why Supabase does not replace mock data yet
+## 1. Why Supabase does not replace mock data globally yet
 
-Sprint 24 establishes the database foundation only. The React UI remains connected to the existing synchronous `dataAdapter` and static mock data. This avoids introducing async rendering, loading states, auth decisions or write risks before the schema and read strategy are approved.
+Sprint 24 establishes the database foundation only. The React UI remains connected mainly to the existing synchronous `dataAdapter` and static mock data. This avoids introducing async rendering, loading states, auth decisions or write risks across the whole system before the read strategy is proven.
+
+Sprint 25 introduces a limited pilot for `/calls` only. No other screen is connected to Supabase during this pilot.
 
 ## 2. Fallback strategy
 
-The new `supabaseReadAdapter` is read-only and defensive:
+The `supabaseReadAdapter` is read-only and defensive:
 
 - If `VITE_SUPABASE_URL` or `VITE_SUPABASE_ANON_KEY` is missing, it returns mock data.
 - If `supabase` is not configured, it returns mock data.
 - If a Supabase query returns an error, it returns mock data.
 - If a Supabase query returns no data, it returns mock data.
+- If a Supabase table is empty, it returns mock data to prevent empty list screens during the read-only pilot.
 
 This means missing ENV values must not break build, render or navigation.
 
@@ -55,7 +58,7 @@ Existing UI adapter:
 
 - `src/lib/dataAdapter.ts`
 
-New read-only adapter:
+Read-only adapter:
 
 - `src/lib/supabaseReadAdapter.ts`
 
@@ -66,24 +69,17 @@ The read-only adapter exposes async `list()` methods for:
 - `volunteers`
 - `members`
 
-The existing UI pages are not refactored to async in Sprint 24.
+## 6. Sprint 25 pilot behavior
 
-## 6. What happens in Sprint 25
+`Sprint 25 — Read Integration Pilot` connects only `/calls` to `supabaseReadAdapter.calls.list()`.
 
-Recommended next sprint:
+Behavior:
 
-`Sprint 25 — Read Integration Pilot`
-
-Scope should be limited to connecting one list screen, preferably `/calls`, to `supabaseReadAdapter.calls.list()` with:
-
-- explicit loading state
-- mock fallback
-- no write operations
-- no auth
-- no public form submit
-- no global refactor
-
-Only after one list screen is stable should additional list screens be connected.
+- `/calls` renders immediately from `callsData` mock data.
+- After render, `/calls` attempts a read-only Supabase fetch through `supabaseReadAdapter.calls.list()`.
+- If Supabase returns mapped call records, the list is updated.
+- If Supabase is missing, fails, returns no data or returns an empty table, the screen keeps mock data.
+- There is no visible UI change and no global async refactor.
 
 ## 7. What remains forbidden until approval
 
@@ -106,9 +102,11 @@ Do not add yet:
 
 ## 8. QA expectations
 
-Sprint 24 passes only if:
+Sprint 25 passes only if:
 
 - build passes without Supabase ENV keys
+- `/calls` renders with mock fallback
+- `/calls` can read from Supabase when ENV and table data exist
 - UI remains visually unchanged
 - no route breaks
 - no `undefined` appears

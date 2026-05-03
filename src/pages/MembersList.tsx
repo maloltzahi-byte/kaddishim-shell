@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -5,6 +6,7 @@ import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
 import { membersData, membersStats } from '../data/members'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
 import type { MemberRecord } from '../types/entities'
 
 type MemberRow = Record<string, React.ReactNode> & MemberRecord
@@ -46,5 +48,26 @@ function MembersActivitySummary() {
 }
 
 export function MembersList() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>חברים</h1><p>רשימת החברים הרשומים והמעקב אחר פעילות קהילתית</p></div><section className="calls-panel"><MembersStats /><MembersFilterBar /><DataTable columns={columns} rows={membersData as MemberRow[]} /><Pagination total={1284} /><MembersActivitySummary /></section></div>
+  const [members, setMembers] = useState<MemberRecord[]>(membersData)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadMembers() {
+      try {
+        const rows = await supabaseReadAdapter.members.list()
+        if (isMounted && rows.length > 0) setMembers(rows)
+      } catch {
+        if (isMounted) setMembers(membersData)
+      }
+    }
+
+    void loadMembers()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return <div className="content calls-content"><div className="title calls-title"><h1>חברים</h1><p>רשימת החברים הרשומים והמעקב אחר פעילות קהילתית</p></div><section className="calls-panel"><MembersStats /><MembersFilterBar /><DataTable columns={columns} rows={members as MemberRow[]} /><Pagination total={1284} /><MembersActivitySummary /></section></div>
 }

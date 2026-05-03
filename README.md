@@ -172,3 +172,52 @@ Files:
 - src/types/supabase.ts
 - docs/11-supabase-readonly-strategy.md
 Status: build passed and Architect QA confirmed.
+
+Sprint 25: Read Integration Pilot — Passed
+Scope: connected `/calls` only to `supabaseReadAdapter.calls.list()` with mock data as the initial render and full fallback if Supabase is not configured, fails, or returns empty data. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
+Files:
+- src/pages/CallsList.tsx
+- src/lib/supabaseReadAdapter.ts
+- README.md
+- docs/11-supabase-readonly-strategy.md
+Status: build passed in StackBlitz and visual QA confirmed.
+
+Sprint 26: Read Integration Expansion — Passed
+Scope: connected `/kaddish-requests`, `/volunteers` and `/members` list screens only to their matching `supabaseReadAdapter` read-only list methods with mock data as the initial render and full fallback if Supabase is not configured, fails, or returns empty data. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
+Files:
+- src/pages/KaddishRequestsList.tsx
+- src/pages/VolunteersList.tsx
+- src/pages/MembersList.tsx
+- README.md
+- docs/11-supabase-readonly-strategy.md
+Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
+
+Sprint 27: Detail Read Integration Batch — Passed
+Scope: connected `/calls/:callId`, `/kaddish-requests/:requestId`, `/volunteers/:volunteerId` and `/members/:memberId` detail screens only to their matching `supabaseReadAdapter` read-only find methods with mock detail data as the initial render and full fallback if Supabase is not configured, fails, returns no row or returns invalid data. Related panels remain static/mock by design. No UI, CSS, route, schema, seed, Auth, CRUD or write-operation changes.
+Files:
+- src/pages/CallDetailsPage.tsx
+- src/pages/KaddishRequestDetailsPage.tsx
+- src/pages/VolunteerDetailsPage.tsx
+- src/pages/MemberDetailsPage.tsx
+- src/lib/supabaseReadAdapter.ts
+- README.md
+- docs/11-supabase-readonly-strategy.md
+Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
+
+Sprint 28: Reports + Public Status Read Integration — Passed
+Scope: connected `/reports` and `/public/status` to read-only Supabase-backed data paths with full mock fallback. Reports compute safe app-side aggregations from existing entities only; missing/related report sections remain mock/static by design. Public status reads the existing sample request status through the approved read-only adapter path and keeps the existing read-only public form behavior. No UI, CSS, route, schema, seed, Auth, CRUD, submit or write-operation changes.
+Files:
+- src/pages/ReportsPage.tsx
+- src/pages/public/PublicStatusPage.tsx
+- README.md
+- docs/11-supabase-readonly-strategy.md
+Status: build passed in StackBlitz, Owner Visual QA passed and Architect Final QA confirmed.
+
+Sprint 29: Write Contract + Validation Plan — Implemented, pending Architect QA
+Scope: added write contract documentation, future payload types, write result/error types and disabled `supabaseWriteAdapter` scaffold. No real insert, update, delete, submit, Auth, CRUD, RLS, schema, seed, UI, CSS, route or page behavior changes.
+Files:
+- docs/12-write-contract.md
+- src/types/entities.ts
+- src/lib/supabaseWriteAdapter.ts
+- README.md
+Status: pending build/QA confirmation.

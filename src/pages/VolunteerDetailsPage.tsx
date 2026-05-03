@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from '../components/primitives/Button'
 import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { dataAdapter } from '../lib/dataAdapter'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
+import type { VolunteerRecord } from '../types/entities'
 
 type VolunteerAssignmentRow = Record<string, React.ReactNode> & { date: string; activityType: string; location: string; time: string; status: string }
 
@@ -69,7 +72,29 @@ function TreatmentTimeline() {
 
 export function VolunteerDetailsPage() {
   const { volunteerId } = useParams()
-  const volunteer = dataAdapter.volunteers.findById(volunteerId || '') || dataAdapter.volunteers.findById('V-2025-0142')
+  const fallbackVolunteer = dataAdapter.volunteers.findById(volunteerId || '') || dataAdapter.volunteers.findById('V-2025-0142')
+  const [volunteer, setVolunteer] = useState<VolunteerRecord | undefined>(fallbackVolunteer)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadVolunteer() {
+      if (!volunteerId) return
+      try {
+        const row = await supabaseReadAdapter.volunteers.findById(volunteerId)
+        if (isMounted && row) setVolunteer(row)
+      } catch {
+        if (isMounted) setVolunteer(fallbackVolunteer)
+      }
+    }
+
+    void loadVolunteer()
+
+    return () => {
+      isMounted = false
+    }
+  }, [volunteerId, fallbackVolunteer])
+
   if (!volunteer) return <div className="content calls-content"><div className="title calls-title"><h1>הפריט לא נמצא</h1></div></div>
   const volunteerStats = [{ label: 'סטטוס', value: volunteer.status }, { label: 'זמינות', value: volunteer.availability }, { label: 'שיבוצים השבוע', value: volunteer.weeklyAssignments }, { label: 'שיבוצים החודש', value: '18' }]
   const volunteerDetails = [{ label: 'שם מלא', value: volunteer.fullName }, { label: 'מס׳ מתנדב', value: volunteer.volunteerId }, { label: 'עיר', value: volunteer.city }, { label: 'טלפון', value: volunteer.phone }, { label: 'סטטוס', value: volunteer.status }, { label: 'עדכון אחרון', value: volunteer.updated }]

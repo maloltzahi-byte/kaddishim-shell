@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -5,6 +6,7 @@ import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
 import { kaddishRequestStats, kaddishRequestsData } from '../data/kaddishRequests'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
 import type { KaddishRequestRecord } from '../types/entities'
 
 type KaddishRequestRow = Record<string, React.ReactNode> & KaddishRequestRecord
@@ -47,5 +49,26 @@ function RequestsActivitySummary() {
 }
 
 export function KaddishRequestsList() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>בקשות קדיש</h1><p>רשימת בקשות הקדיש והמעקב אחר שיבוץ מתנדבים</p></div><section className="calls-panel"><RequestsStats /><RequestsFilterBar /><DataTable columns={columns} rows={kaddishRequestsData as KaddishRequestRow[]} /><Pagination total={56} /><RequestsActivitySummary /></section></div>
+  const [requests, setRequests] = useState<KaddishRequestRecord[]>(kaddishRequestsData)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadRequests() {
+      try {
+        const rows = await supabaseReadAdapter.kaddishRequests.list()
+        if (isMounted && rows.length > 0) setRequests(rows)
+      } catch {
+        if (isMounted) setRequests(kaddishRequestsData)
+      }
+    }
+
+    void loadRequests()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return <div className="content calls-content"><div className="title calls-title"><h1>בקשות קדיש</h1><p>רשימת בקשות הקדיש והמעקב אחר שיבוץ מתנדבים</p></div><section className="calls-panel"><RequestsStats /><RequestsFilterBar /><DataTable columns={columns} rows={requests as KaddishRequestRow[]} /><Pagination total={56} /><RequestsActivitySummary /></section></div>
 }

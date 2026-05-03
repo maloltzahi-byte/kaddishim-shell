@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SearchInput } from '../components/primitives/SearchInput'
 import { SelectField } from '../components/primitives/SelectField'
@@ -5,17 +6,10 @@ import { Badge, type BadgeTone } from '../components/primitives/Badge'
 import { DataTable, type Column } from '../components/table/DataTable'
 import { Pagination } from '../components/table/Pagination'
 import { volunteersData, volunteersStats } from '../data/volunteers'
+import { supabaseReadAdapter } from '../lib/supabaseReadAdapter'
+import type { VolunteerRecord } from '../types/entities'
 
-type VolunteerRow = Record<string, React.ReactNode> & {
-  volunteerId: string
-  fullName: string
-  city: string
-  phone: string
-  availability: string
-  weeklyAssignments: string
-  status: string
-  updated: string
-}
+type VolunteerRow = Record<string, React.ReactNode> & VolunteerRecord
 
 function statusTone(status: string): BadgeTone {
   if (status === 'פעיל') return 'success'
@@ -57,5 +51,26 @@ function VolunteersActivitySummary() {
 }
 
 export function VolunteersList() {
-  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדבים</h1><p>רשימת המתנדבים הפעילים והמעקב אחר זמינות ושיבוצים</p></div><section className="calls-panel"><VolunteersStats /><VolunteersFilterBar /><DataTable columns={columns} rows={volunteersData as VolunteerRow[]} /><Pagination total={142} /><VolunteersActivitySummary /></section></div>
+  const [volunteers, setVolunteers] = useState<VolunteerRecord[]>(volunteersData)
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadVolunteers() {
+      try {
+        const rows = await supabaseReadAdapter.volunteers.list()
+        if (isMounted && rows.length > 0) setVolunteers(rows)
+      } catch {
+        if (isMounted) setVolunteers(volunteersData)
+      }
+    }
+
+    void loadVolunteers()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return <div className="content calls-content"><div className="title calls-title"><h1>מתנדבים</h1><p>רשימת המתנדבים הפעילים והמעקב אחר זמינות ושיבוצים</p></div><section className="calls-panel"><VolunteersStats /><VolunteersFilterBar /><DataTable columns={columns} rows={volunteers as VolunteerRow[]} /><Pagination total={142} /><VolunteersActivitySummary /></section></div>
 }
